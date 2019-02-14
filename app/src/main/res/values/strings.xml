@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Manage Time Better</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_dashboard">Dashboard</string>
+
+    <string name="current_day_date">Today</string>
+
+    <string name="time_0">12 am</string>
+    <string name="time_1">1 am</string>
+    <string name="time_2">2 am</string>
+    <string name="time_3">3 am</string>
+    <string name="time_4">4 am</string>
+    <string name="time_5">5 am</string>
+    <string name="time_6">6 am</string>
+    <string name="time_7">7 am</string>
+    <string name="time_8">8 am</string>
+    <string name="time_9">9 am</string>
+    <string name="time_10">10 am</string>
+    <string name="time_11">11 am</string>
+    <string name="time_12">12 pm</string>
+    <string name="time_13">1 pm</string>
+    <string name="time_14">2 pm</string>
+    <string name="time_15">3 pm</string>
+    <string name="time_16">4 pm</string>
+    <string name="time_17">5 pm</string>
+    <string name="time_18">6 pm</string>
+    <string name="time_19">7 pm</string>
+    <string name="time_20">8 pm</string>
+    <string name="time_21">9 pm</string>
+    <string name="time_22">10 pm</string>
+    <string name="time_23">11 pm</string>
+    <string name="addEvent_eventTitle">Title</string>
+    <string name="addEvent_allDay">All Day</string>
+    <string name="addEvent_start">Start</string>
+    <string name="addEvent_startDate">Today</string>
+    <string name="addEvent_startTime">11:00</string>
+    <string name="addEvent_end">End</string>
+    <string name="addEvent_endDate">Today</string>
+    <string name="addEvent_endTime">12:00</string>
+    <string name="addEvent_location">Location</string>
+    <string name="addEvent_notes">Notes</string>
+    <string name="addEvent_busy">Show as Busy</string>
+    <string name="addEvent_add">Add Event</string>
+</resources>
