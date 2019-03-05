@@ -17,6 +17,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -75,7 +76,7 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends AppCompatAc
         }
         catch (NullPointerException e){}
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Get Layout items
@@ -90,7 +91,12 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends AppCompatAc
                 this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                 this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
             // Permission granted
-            Log.d(TAG, "onCreate: Calendar Permissions");
+            Log.d(TAG, "onCreate: Calendar Permissions Granted");
+            Log.d(TAG, "Adding CalendarFrag");
+
+
+
+
             getDataFromCalendarTable();
             // Get Events from Calendar
             // Run query
