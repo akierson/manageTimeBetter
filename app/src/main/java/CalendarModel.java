@@ -15,14 +15,11 @@ public class CalendarModel {
     //
 
     // Methods
-    public void getPlannedEvents (Date startDay = cal.time(), Date endDay = ) {
+    public void getPlannedEvents (Date startDay = cal.tim, Date endDay = cal.time()) {
         if ( startDay == null ) {
 
         }
     }
-
-    // }
-    // default to today
 
     // getUsageEvents (startDay, endDay)
     // default  to today

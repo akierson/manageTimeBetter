@@ -94,20 +94,13 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends AppCompatAc
             Log.d(TAG, "onCreate: Calendar Permissions Granted");
             Log.d(TAG, "Adding CalendarFrag");
 
-
-
-
-            getDataFromCalendarTable();
             // Get Events from Calendar
+            getDataFromCalendarTable();
             // Run query
         } else {
             showReadCalendarPermission();
             showWriteCalendarPermission();
         }
-
-        // Get Usage Data
-        // Create events from data
-
 
     }
 
