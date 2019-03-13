@@ -2,7 +2,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarModel {
-    Calendar cal = Calendar.getInstance()
+    Calendar cal = Calendar.getInstance();
     // User account
 
     // Events from calendar
@@ -15,7 +15,7 @@ public class CalendarModel {
     //
 
     // Methods
-    public void getPlannedEvents (Date startDay = cal.tim, Date endDay = cal.time()) {
+    public void getPlannedEvents (Date startDay, Date endDay) {
         if ( startDay == null ) {
 
         }

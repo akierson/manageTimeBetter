@@ -1,6 +1,7 @@
 package com.akierson.managetimebetter;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -36,7 +37,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity<mOnNavigationItemSelectedListener> extends AppCompatActivity {
+
+// Loads Calendars from phone and stores usage events from recent times
+public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
 
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
@@ -70,11 +73,6 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends AppCompatAc
 
         // Set layout
         setContentView(R.layout.activity_main);
-        try
-        {
-            this.getSupportActionBar().hide();
-        }
-        catch (NullPointerException e){}
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
