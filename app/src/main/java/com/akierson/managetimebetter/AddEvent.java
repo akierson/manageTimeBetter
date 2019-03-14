@@ -178,4 +178,8 @@ public class AddEvent extends Activity {
                 hour, minute, DateFormat.is24HourFormat(this));
         dialog.show();
     }
+
+    public void cancel(View view) {
+        finish();
+    }
 }

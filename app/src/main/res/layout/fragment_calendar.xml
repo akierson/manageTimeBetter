@@ -6,494 +6,577 @@
     tools:context=".CalendarFrag">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:background="@color/colorAccent"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/previous_day"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/baseline_arrow_left_black_24dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/display_current_date"
-            android:layout_width="0dp"
+        android:background="@color/colorPrimary"
+        android:elevation="8dp"
+        android:minHeight="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="@string/current_day_date"
-            android:layout_marginTop="4dp"
-            android:textStyle="bold"
-            android:layout_weight="3"/>
-        <ImageView
-            android:id="@+id/next_day"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/baseline_arrow_right_black_24dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/prevDay"
+                style="@android:style/Widget.Holo.Light.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_left_black_24dp" />
+
+            <TextView
+                android:id="@+id/calendarDayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_calendar"
+                android:layout_weight="6"/>
+
+            <ImageButton
+                android:id="@+id/nextDay"
+                style="@android:style/Widget.Holo.Light.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_right_black_24dp" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="1500dp"
                 android:layout_weight="2">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_0"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="20dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_0"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="60dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_1"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="80dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_1"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="120dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_2"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="140dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_2"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="180dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_3"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="200dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_3"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="240dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_4"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="260dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_4"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="300dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_5"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="320dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_5"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="360dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_6"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="380dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_6"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="420dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_7"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="440dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_7"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="480dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_8"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="500dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_8"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="540dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_9"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="560dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_9"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="600dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_10"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="620dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_10"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="660dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_11"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="680dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_11"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="720dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_12"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="740dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_12"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="780dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_13"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="800dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_13"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="840dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_14"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="860dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_14"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="900dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_15"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="920dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_15"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="960dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_16"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="980dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_16"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1020dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_17"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1040dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_17"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1080dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_18"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1100dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_18"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1140dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_19"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1160dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_19"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1200dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_20"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1220dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_20"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1260dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_21"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1280dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_21"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1320dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_22"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1340dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_22"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1380dp"
                     android:background="@color/colorDivider" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorBlack"
-                    android:textStyle="bold"
-                    android:text="@string/time_23"
+                    android:layout_centerHorizontal="true"
                     android:paddingTop="1400dp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="@string/time_23"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1440dp"
                     android:background="@color/colorDivider" />
             </RelativeLayout>
+
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorDivider" />
+
             <RelativeLayout
                 android:id="@+id/left_event_column"
                 android:layout_width="0dp"
                 android:layout_height="1500dp"
                 android:layout_weight="8">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="60dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="120dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="180dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="240dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="300dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="360dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="420dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="480dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="540dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="600dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="660dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="720dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="780dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="840dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="900dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="960dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1020dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1080dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1140dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1200dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1260dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1320dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1380dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="1440dp"
                     android:background="@color/colorDivider" />
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"

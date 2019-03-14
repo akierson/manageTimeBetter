@@ -237,43 +237,15 @@ public class MainActivity extends AppCompatActivity {
                     // Remove Other Fragments first
                     // Then Load Current Fragment
                     Log.d(TAG, "Adding Calendar Fragment");
-                    if (goalFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(goalFrag).commit();
-                    }
-                    if (dashFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(dashFrag).commit();
-                    }
-                    if (calFrag.isAdded()) {
-                        Log.d(TAG, "Adding Calendar Fragment");
-                        return true;
-                    }
-                    getSupportFragmentManager().beginTransaction().attach(calFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
                     return true;
                 case R.id.navigation_goals:
                     Log.d(TAG, "Adding Goal Fragment");
-                    if (calFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(calFrag).commit();
-                    }
-                    if (dashFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(dashFrag).commit();
-                    }
-                    if (goalFrag.isAdded()) {
-                        return true;
-                    }
-                    getSupportFragmentManager().beginTransaction().attach(goalFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, goalFrag).commit();
                     return true;
                 case R.id.navigation_dashboard:
                     Log.d(TAG, "Adding Dashboard Fragment");
-                    if (calFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(calFrag).commit();
-                    }
-                    if (goalFrag.isAdded()) {
-                        getSupportFragmentManager().beginTransaction().detach(goalFrag).commit();
-                    }
-                    if (dashFrag.isAdded()) {
-                        return true;
-                    }
-                    getSupportFragmentManager().beginTransaction().attach(dashFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashFrag).commit();
                     return true;
 
             }

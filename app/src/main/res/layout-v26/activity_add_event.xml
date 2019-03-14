@@ -23,16 +23,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@android:string/cancel"
-                android:textAlignment="center"
-                android:onClick="cancel"/>
+                android:textAlignment="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/addEvent_add"
-                android:textAlignment="center"
-                android:onClick="addEvent"/>
+                android:textAlignment="center" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -63,11 +61,11 @@
                 android:ems="10"
                 android:hint="@string/addEvent_eventTitle"
                 android:inputType="date|textPersonName"
+                android:autofillHints="@string/addEvent_eventTitle"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_allDay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:autofillHints="" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
                 android:id="@+id/addEvent_allDay"
