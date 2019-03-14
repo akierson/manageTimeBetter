@@ -22,19 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <EditText
                 android:id="@+id/addEvent_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="16dp"
                 android:ems="10"
-                android:inputType="date|textPersonName"
                 android:hint="@string/addEvent_eventTitle"
+                android:inputType="date|textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_allDay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +40,9 @@
 
             <Switch
                 android:id="@+id/addEvent_allDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:text="@string/addEvent_allDay"
                 app:layout_constraintEnd_toEndOf="@+id/addEvent_title"
                 app:layout_constraintStart_toStartOf="@+id/addEvent_title"
@@ -52,8 +51,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:gravity="center"
-                android:onClick="setStart"
                 android:orientation="horizontal">
 
                 <TextView
@@ -70,30 +69,31 @@
                     android:id="@+id/addEvent_startDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="setStartDate"
                     android:text="@string/addEvent_startDate"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_endDate"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_startTime"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_endTime"
-                    android:onClick="setStartDate"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_endTime" />
 
                 <TextView
                     android:id="@+id/addEvent_startTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="setStartTime"
                     android:text="@string/addEvent_startTime"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_startDate"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@+id/addEvent_end"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_end"
-                    android:onClick="setStartTime"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_end" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="16dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -111,60 +111,54 @@
                     android:id="@+id/addEvent_endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="setEndDate"
                     android:text="@string/addEvent_endDate"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toEndOf="@+id/addEvent_start"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_startDate"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_start"
-                    android:onClick="setEndDate"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_start" />
 
                 <TextView
                     android:id="@+id/addEvent_endTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="setEndTime"
                     android:text="@string/addEvent_endTime"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_startDate"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_start"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_end"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay"
-                    android:onClick="setEndTime"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/addEvent_location"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:inputType="textPostalAddress"
                 android:hint="@string/addEvent_location"
+                android:inputType="textPostalAddress"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_notes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/addEvent_notes"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:inputType="text"
                 android:hint="@string/addEvent_notes"
+                android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_busy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Switch
                 android:id="@+id/addEvent_busy"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="16dp"
                 android:text="@string/addEvent_busy"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_add"
                 app:layout_constraintEnd_toEndOf="@+id/addEvent_notes"
@@ -176,8 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="32dp"
-                android:text="@string/addEvent_add"
                 android:onClick="addEvent"
+                android:text="@string/addEvent_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/addEvent_busy" />
         </LinearLayout>

@@ -18,6 +18,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -39,8 +40,7 @@ import java.util.Locale;
 
 
 // Loads Calendars from phone and stores usage events from recent times
-public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
-
+public class MainActivity extends AppCompatActivity {
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
     private final int REQUEST_PERMISSION_WRITE_CALENDAR=2;
@@ -57,6 +57,11 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
     private Calendar cal = Calendar.getInstance();
     private RelativeLayout mLayout;
     private int eventIndex;
+
+    // Fragments
+    CalendarFragment calFrag;
+    DashboardFragment dashFrag;
+    GoalsFragment goalFrag;
 
     //  From Documentation on Calendar Provider
     public static final String[] FIELDS = new String[] {
@@ -81,6 +86,12 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
         FloatingActionButton fab = findViewById(R.id.fab);
         mLayout = findViewById(R.id.left_event_column);
 
+        calFrag = new CalendarFragment();
+        dashFrag = new DashboardFragment();
+        goalFrag = new GoalsFragment();
+
+        // TODO: Hide Toolbar
+
         showReadCalendarPermission();
         showWriteCalendarPermission();
 
@@ -90,7 +101,6 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
                 this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
             // Permission granted
             Log.d(TAG, "onCreate: Calendar Permissions Granted");
-            Log.d(TAG, "Adding CalendarFrag");
 
             // Get Events from Calendar
             getDataFromCalendarTable();
@@ -219,14 +229,53 @@ public class MainActivity<mOnNavigationItemSelectedListener> extends Activity {
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
+
+        // TODO: 3/13/2019 change over to ViewPager and have load calls in selectors 
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
-                    //
+                    // Remove Other Fragments first
+                    // Then Load Current Fragment
+                    Log.d(TAG, "Adding Calendar Fragment");
+                    if (goalFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(goalFrag).commit();
+                    }
+                    if (dashFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(dashFrag).commit();
+                    }
+                    if (calFrag.isAdded()) {
+                        Log.d(TAG, "Adding Calendar Fragment");
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().attach(calFrag).commit();
+                    return true;
+                case R.id.navigation_goals:
+                    Log.d(TAG, "Adding Goal Fragment");
+                    if (calFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(calFrag).commit();
+                    }
+                    if (dashFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(dashFrag).commit();
+                    }
+                    if (goalFrag.isAdded()) {
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().attach(goalFrag).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    //
+                    Log.d(TAG, "Adding Dashboard Fragment");
+                    if (calFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(calFrag).commit();
+                    }
+                    if (goalFrag.isAdded()) {
+                        getSupportFragmentManager().beginTransaction().detach(goalFrag).commit();
+                    }
+                    if (dashFrag.isAdded()) {
+                        return true;
+                    }
+                    getSupportFragmentManager().beginTransaction().attach(dashFrag).commit();
                     return true;
+
             }
             return false;
         }

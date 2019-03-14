@@ -17,16 +17,10 @@
         android:text="@string/title_calendar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
-
-
+        android:id="@+id/activity_main"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

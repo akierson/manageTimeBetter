@@ -1,5 +1,6 @@
 package com.akierson.managetimebetter;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddEvent extends AppCompatActivity {
+public class AddEvent extends Activity {
 
     private static final String TAG = "Add Event";
 
@@ -45,6 +46,8 @@ public class AddEvent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        // Add Toolbar
 
         Calendar.getInstance();
         String today = Calendar.YEAR + "/" + Calendar.MONTH + "/" + Calendar.DAY_OF_MONTH;
@@ -108,7 +111,7 @@ public class AddEvent extends AppCompatActivity {
 
 
         // Finish adding parts to event handling
-        Intent intent = new Intent(Intent.ACTION_EDIT);
+        Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra(CalendarContract.Events.TITLE, title.getText());
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
