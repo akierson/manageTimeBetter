@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class OnBoarding extends Activity {
+    // Creat this shit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

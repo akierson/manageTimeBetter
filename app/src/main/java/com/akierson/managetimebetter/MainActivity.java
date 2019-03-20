@@ -51,12 +51,14 @@ public class MainActivity extends AppCompatActivity {
     // For stopping time usage events
 
     // Views
-    private ImageView previousDay;
-    private ImageView nextDay;
-    private TextView currentDate;
-    private Calendar cal = Calendar.getInstance();
     private RelativeLayout mLayout;
+
+    // Data Instances
+    private Calendar cal = Calendar.getInstance();
     private int eventIndex;
+    // Public in order to be accessed from frags
+    //TODO: Add DashboardModel, GoalModel at astart for easier access
+    public CalendarModel calModel = new CalendarModel();
 
     // Fragments
     CalendarFragment calFrag;
@@ -84,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Get Layout items
         FloatingActionButton fab = findViewById(R.id.fab);
-        mLayout = findViewById(R.id.left_event_column);
 
+        // Initialise Fragments
         calFrag = new CalendarFragment();
         dashFrag = new DashboardFragment();
         goalFrag = new GoalsFragment();
@@ -104,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
             // Permission granted
             Log.d(TAG, "onCreate: Calendar Permissions Granted");
 
-            // Get Events from Calendar
-            getDataFromCalendarTable();
             // Run query
         } else {
             showReadCalendarPermission();
@@ -196,49 +196,15 @@ public class MainActivity extends AppCompatActivity {
     // On Fab Press
     public void onFabPress(View fab){
         // open new window with event adding
+        // TODO: 3/20/2019 Pass current date to addEvent for better workage
         Intent intent = new Intent(this, AddEvent.class);
         startActivity(intent);
-    }
-
-    public void getDataFromCalendarTable() {
-        Cursor cur = null;
-        ContentResolver cr = getContentResolver();
-
-        String[] mProjection =
-                {
-                        CalendarContract.Calendars.ALLOWED_ATTENDEE_TYPES,
-                        CalendarContract.Calendars.ACCOUNT_NAME,
-                        CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-                        CalendarContract.Calendars.CALENDAR_LOCATION,
-                        CalendarContract.Calendars.CALENDAR_TIME_ZONE
-                };
-
-        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
-                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
-                + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-        String[] selectionArgs = new String[]{"*"};
-
-        cur = cr.query(uri, mProjection, selection, selectionArgs, null);
-
-        while (cur.moveToNext()) {
-            Log.d(TAG, "onCreate: Item added");
-            String displayName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
-            String accountName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME));
-
-            TextView tv1 =  new TextView(this);
-            tv1.setText(displayName);
-            mLayout.addView(tv1);
-        }
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
-
-        // TODO: 3/13/2019 change over to ViewPager and have load calls in selectors 
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:

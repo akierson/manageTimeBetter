@@ -2,12 +2,11 @@ package com.akierson.managetimebetter;
 
 public class Goal {
     private int id;
-    private int level; // TODO: Change to enum
+    private int level;
     private String description;
     private boolean recursion;
 
-    public Goal(int id, int level, String description, boolean recursion) {
-        this.id = id;
+    public Goal(int level, String description, boolean recursion) {
         this.level = level;
         this.description = description;
         this.recursion = recursion;

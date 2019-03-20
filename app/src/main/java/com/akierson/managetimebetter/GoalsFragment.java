@@ -23,10 +23,8 @@ import java.util.List;
  */
 public class GoalsFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mColumnCount = 3;
     private OnListFragmentInteractionListener mListener;
     RecyclerView recyclerView;
     GoalCardAdapter adapter;
@@ -41,7 +39,6 @@ public class GoalsFragment extends Fragment {
 
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static GoalsFragment newInstance(int columnCount) {
         GoalsFragment fragment = new GoalsFragment();

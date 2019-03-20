@@ -110,7 +110,7 @@ public class AddEvent extends Activity {
         long endDateMillis = mdate.getTime();
 
 
-        // Finish adding parts to event handling
+        // TODO: opening calendar and not just adding to calendar
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra(CalendarContract.Events.TITLE, title.getText());
@@ -179,6 +179,7 @@ public class AddEvent extends Activity {
         dialog.show();
     }
 
+    //TODO: cancel not working
     public void cancel(View view) {
         finish();
     }

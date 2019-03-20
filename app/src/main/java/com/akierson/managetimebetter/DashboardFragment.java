@@ -19,8 +19,6 @@ import android.view.ViewGroup;
  */
 public class DashboardFragment extends Fragment {
 
-    // TODO: 3/13/2019
-
     private OnFragmentInteractionListener mListener;
 
     public DashboardFragment() {
@@ -31,27 +29,29 @@ public class DashboardFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param startDay first day to start reporting - will default to first day from calendar.
+     * @param endDay Last day to end reporting - will default to last day on calendar.
      * @return A new instance of fragment DashboardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
+    public static DashboardFragment newInstance(String startDay, String endDay) {
         DashboardFragment fragment = new DashboardFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+        // TODO: 3/20/2019 research this
+        Bundle args = new Bundle();
+        args.putString(STARTDAY, startDay);
+        args.putString(ENDDAY, endDay);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
+        if (getArguments() != null) {
+            mStartDay = getArguments().getString(STARTDAY);
+            mEndDay = getArguments().getString(ENDAY);
+        }
+        // TODO: 3/20/2019 Get data from DashboardModel
     }
 
     @Override
@@ -82,6 +82,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        // TODO: 3/20/2019 Save dashboard end day to tempData
         mListener = null;
     }
 

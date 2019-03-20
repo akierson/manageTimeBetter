@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -35,13 +36,26 @@ public class AddGoal extends AppCompatActivity {
 
     }
 
-    public void addGoal(View view) {
-        // TODO: 3/14/2019 Add Goal to SQLite Table, Check is filled out
+    public boolean addGoal(View view) {
+//        TODO: Make multiple levels of goal setting
+
+        // Get values of item
+        String description = "";
         if (gDescr.getText() != null) {
-            String description = (String) gDescr.getText();
+            description = (String) gDescr.getText();
+        } else {
+            Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noDescr), Toast.LENGTH_SHORT).show();
+            return false;
         }
-        String goalLevel;
-        String goalArea = (String) gSpinner.getSelectedItem();
-        boolean recurring = gRecurring.isEnabled();
+        //TODO: cast to int
+        String goalLevel = String.valueOf(gLevel.getCheckedRadioButtonId());            // will always have a value
+        String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
+        boolean recurring = gRecurring.isEnabled();                                     // will always have a value
+
+        Goal mGoal = new Goal(goalLevel, description, recurring);
+
+
+        // TODO: 3/14/2019 Add Goal to SQLite Table
+        return true;
     }
 }

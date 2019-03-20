@@ -18,30 +18,24 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class CalendarFragment extends Fragment {
-    // TODO: Add params is needed
-
+    
     private OnFragmentInteractionListener mListener;
 
     public CalendarFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment Calendar.
-     */
-    // TODO: Rename and change types and number of parameters
+    
     public static CalendarFragment newInstance() {
+        // TODO: Add params for storing current day
         CalendarFragment fragment = new CalendarFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //TODO: Load calendar from current day
 
     }
 
@@ -50,6 +44,8 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendar, container, false);
+        
+        //TODO Load events from calendar model
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -57,13 +53,15 @@ public class CalendarFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+        // TODO: 3/20/2019 Add prev day/next day handlers 
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        // TODO: 3/13/2019 Requires listener if passing information between 
+        // TODO: 3/13/2019 Requires listener if passing information between
+        // TODO: 3/20/2019 pass currently selected day(s) 
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //        } else {
@@ -74,6 +72,7 @@ public class CalendarFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        //TODO: save start and end days
         super.onDetach();
         mListener = null;
     }
