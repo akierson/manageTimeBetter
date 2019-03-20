@@ -90,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
         dashFrag = new DashboardFragment();
         goalFrag = new GoalsFragment();
 
-        // TODO: Hide Toolbar
+        // Add Calendar Fragment to home screen
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
 
+        // Check for calendar permissions
         showReadCalendarPermission();
         showWriteCalendarPermission();
 
@@ -122,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 requestPermission(Manifest.permission.READ_CALENDAR, REQUEST_PERMISSION_READ_CALENDAR);
             }
         } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "showReadCalendarPermission: Read Calendar Permission Already Granted");
+            //Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
     private void showWriteCalendarPermission() {
@@ -136,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 requestPermission(Manifest.permission.WRITE_CALENDAR, REQUEST_PERMISSION_WRITE_CALENDAR);
             }
         } else {
-            Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "showWriteCalendarPermission: Write Calendar Permission Already Granted");
+            // Toast.makeText(MainActivity.this, "Permission (already) Granted!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,17 +153,21 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_PERMISSION_READ_CALENDAR:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onRequestPermissionsResult: Read Permission Granted");
+                    //Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onRequestPermissionsResult: Read Permission Denied");
+                    // Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case REQUEST_PERMISSION_WRITE_CALENDAR:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onRequestPermissionsResult: Write Permission Granted");
+                    // Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onRequestPermissionsResult: Write Permission Denied");
+                    // Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

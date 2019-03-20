@@ -56,6 +56,7 @@
     <string name="addGoal_addGoalArea">+</string>
     <string name="addGoal_recurring">Recurring</string>
     <string name="addGoalCancel">Cancel</string>
+    <string name="goalTitle">Goals</string>
     <string-array name="goalAreas">
         <item>Financial</item>
         <item>Health</item>
