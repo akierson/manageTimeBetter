@@ -19,19 +19,23 @@
             android:layout_height="wrap_content">
 
             <Button
-                style="@android:style/Widget.Material.Light.Button.Borderless.Small"
+                android:id="@+id/addEvent_cancel"
+                style="@android:style/Widget.Material.Light.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:elevation="8dp"
                 android:onClick="cancel"
                 android:text="@android:string/cancel"
                 android:textAlignment="center" />
 
             <Button
+                android:id="@+id/addEvent_addEvent"
                 style="@android:style/Widget.Material.Light.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:elevation="8dp"
                 android:onClick="addEvent"
                 android:text="@string/addEvent_add"
                 android:textAlignment="center" />

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -48,11 +49,12 @@ public class AddGoal extends AppCompatActivity {
             return false;
         }
         //TODO: cast to int
-        String goalLevel = findViewById(gLevel.getCheckedRadioButtonId()).get;            // will always have a value
+        RadioButton gLevelButton= findViewById(gLevel.getCheckedRadioButtonId());         // will always have a value
+        String goalLevel = String.valueOf(gLevelButton.getText());
         String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
         boolean recurring = gRecurring.isEnabled();                                     // will always have a value
 
-        Goal mGoal = new Goal(goalLevel, description, recurring);
+        Goal mGoal = new Goal(Integer.parseInt(goalLevel), description, recurring);
 
 
         // TODO: 3/14/2019 Add Goal to SQLite Table

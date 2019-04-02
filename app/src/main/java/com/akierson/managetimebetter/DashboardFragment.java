@@ -20,6 +20,10 @@ import android.view.ViewGroup;
 public class DashboardFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private static final String STARTDAY = "start-day";
+    private static final String ENDDAY = "end-day";
+    String mStartDay;
+    String mEndDay;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -49,7 +53,7 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mStartDay = getArguments().getString(STARTDAY);
-            mEndDay = getArguments().getString(ENDAY);
+            mEndDay = getArguments().getString(ENDDAY);
         }
         // TODO: 3/20/2019 Get data from DashboardModel
     }

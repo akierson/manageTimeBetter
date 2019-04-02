@@ -49,26 +49,28 @@ public class AddEvent extends Activity {
 
         // Add Toolbar
 
-        Calendar.getInstance();
-        String today = Calendar.YEAR + "/" + Calendar.MONTH + "/" + Calendar.DAY_OF_MONTH;
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 
         title = findViewById(R.id.addEvent_title);
         startDate = findViewById(R.id.addEvent_startDate);
-        startDate.setText(today);
         startTime = findViewById(R.id.addEvent_startTime);
         endDate = findViewById(R.id.addEvent_endDate);
-        endDate.setText(today);
         endTime = findViewById(R.id.addEvent_endTime);
         location = findViewById(R.id.addEvent_location);
         notes = findViewById(R.id.addEvent_notes);
         allDay = findViewById(R.id.addEvent_allDay);
         busy = findViewById(R.id.addEvent_busy);
 
+        startDate.setText(today);
+        endDate.setText(today);
+        startTime.setText(String.valueOf(Calendar.HOUR) + ":00");
+        endTime.setText(String.valueOf(Calendar.HOUR+1) + ":00");
+
         startDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+                Log.d(TAG, "onDateSet: mm/dd/yyyy: " + month + "/" + day + "/" + year);
 
                 String date = month + "/" + day + "/" + year;
                 startDate.setText(date);
