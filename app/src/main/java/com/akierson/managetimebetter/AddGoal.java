@@ -48,7 +48,7 @@ public class AddGoal extends AppCompatActivity {
             return false;
         }
         //TODO: cast to int
-        String goalLevel = String.valueOf(gLevel.getCheckedRadioButtonId());            // will always have a value
+        String goalLevel = findViewById(gLevel.getCheckedRadioButtonId()).get;            // will always have a value
         String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
         boolean recurring = gRecurring.isEnabled();                                     // will always have a value
 

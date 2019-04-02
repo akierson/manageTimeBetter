@@ -110,7 +110,7 @@ public class AddEvent extends Activity {
         long endDateMillis = mdate.getTime();
 
 
-        // TODO: opening calendar and not just adding to calendar
+        // TODO: opening calendar and not just adding to calendar ??
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra(CalendarContract.Events.TITLE, title.getText());

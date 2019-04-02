@@ -18,21 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <Button
+                style="@android:style/Widget.Material.Light.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="cancel"
                 android:text="@android:string/cancel"
-                android:textAlignment="center"
-                android:onClick="cancel"/>
+                android:textAlignment="center" />
 
-            <TextView
+            <Button
+                style="@android:style/Widget.Material.Light.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="addEvent"
                 android:text="@string/addEvent_add"
-                android:textAlignment="center"
-                android:onClick="addEvent"/>
+                android:textAlignment="center" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 

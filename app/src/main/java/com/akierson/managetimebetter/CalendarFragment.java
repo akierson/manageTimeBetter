@@ -72,7 +72,7 @@ public class CalendarFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        //TODO: save start and end days
+        //TODO: save start and end days.
         super.onDetach();
         mListener = null;
     }
