@@ -38,7 +38,6 @@ public class AddGoal extends AppCompatActivity {
     }
 
     public boolean addGoal(View view) {
-//        TODO: Make multiple levels of goal setting
 
         // Get values of item
         String description = "";
@@ -48,7 +47,6 @@ public class AddGoal extends AppCompatActivity {
             Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noDescr), Toast.LENGTH_SHORT).show();
             return false;
         }
-        //TODO: cast to int
         RadioButton gLevelButton= findViewById(gLevel.getCheckedRadioButtonId());         // will always have a value
         String goalLevel = String.valueOf(gLevelButton.getText());
         String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
@@ -56,8 +54,8 @@ public class AddGoal extends AppCompatActivity {
 
         Goal mGoal = new Goal(Integer.parseInt(goalLevel), description, recurring);
 
-
         // TODO: 3/14/2019 Add Goal to SQLite Table
+
         return true;
     }
 }

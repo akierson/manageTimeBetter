@@ -1,6 +1,7 @@
 package com.akierson.managetimebetter;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -26,6 +27,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,7 +44,7 @@ import java.util.Locale;
 
 
 // Loads Calendars from phone and stores usage events from recent times
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener{
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
     private final int REQUEST_PERMISSION_WRITE_CALENDAR=2;
@@ -51,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
     // For stopping time usage events
 
     // Views
-    private RelativeLayout mLayout;
+    FloatingActionButton fabEvent;
+    FloatingActionButton fabGoals;
+
+    Animation showFabEvent;
+    Animation showFabGoals;
 
     // Data Instances
     private Calendar cal = Calendar.getInstance();
@@ -85,7 +93,12 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Get Layout items
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fabEvent = findViewById(R.id.fab_event);
+        fabGoals = findViewById(R.id.fab_goal);
+
+        // Add Fab Animations
+        showFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_event);
+        showFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_goals);
 
         // Initialise Fragments
         calFrag = new CalendarFragment();
@@ -197,9 +210,28 @@ public class MainActivity extends AppCompatActivity {
     public void onFabPress(View fab){
         // open new window with event adding
         // TODO: 3/20/2019 Pass current date to addEvent for better workage
-        Intent intent = new Intent(this, AddEvent.class);
-        startActivity(intent);
+        // TODO: 4/3/2019 get current fragment
+        // Add Two fabs
+        // Move FAB Event
+        FrameLayout.LayoutParams layoutParamsEvent = (FrameLayout.LayoutParams) fabEvent.getLayoutParams();
+        FrameLayout.LayoutParams layoutParamsGoals = (FrameLayout.LayoutParams) fabGoals.getLayoutParams();
+
+        layoutParamsEvent.rightMargin += (int) (fabEvent.getWidth() * 1.7);
+        layoutParamsGoals.rightMargin += (int) (fabGoals.getWidth() * 1.7);
+        layoutParamsEvent.leftMargin += (int) (fabEvent.getHeight() * 0.25);
+        layoutParamsGoals.leftMargin += (int) (fabGoals.getHeight() * 0.25);
+        fabEvent.setLayoutParams(layoutParamsEvent);
+        fabGoals.setLayoutParams(layoutParamsGoals);
+        fabEvent.startAnimation(showFabEvent);
+        fabGoals.startAnimation(showFabGoals);
+        fabEvent.setClickable(true);
+        fabGoals.setClickable(true);
+
+//        Intent intent = new Intent(this, AddEvent.class);
+//        startActivity(intent);
     }
+    // Fab Event
+    // Fab Goal
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -211,19 +243,24 @@ public class MainActivity extends AppCompatActivity {
                     // Remove Other Fragments first
                     // Then Load Current Fragment
                     Log.d(TAG, "Adding Calendar Fragment");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag, "CalFragAttached").commit();
                     return true;
                 case R.id.navigation_goals:
                     Log.d(TAG, "Adding Goal Fragment");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, goalFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, goalFrag, "GoalFragAttached").commit();
                     return true;
                 case R.id.navigation_dashboard:
                     Log.d(TAG, "Adding Dashboard Fragment");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashFrag).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashFrag, "DashFragAttached").commit();
                     return true;
 
             }
             return false;
         }
     };
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        // TODO: 4/3/2019 display event selected 
+    }
 }

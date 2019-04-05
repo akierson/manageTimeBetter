@@ -43,4 +43,7 @@ public class Goal {
     public void setRecursion(boolean recursion) {
         this.recursion = recursion;
     }
+
+    // TODO: 4/3/2019 Add methods to add goal to table 
+
 }

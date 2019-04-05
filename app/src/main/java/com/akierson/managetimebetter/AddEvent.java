@@ -104,6 +104,8 @@ public class AddEvent extends Activity {
     }
 
     public void addEvent(View view) throws ParseException {
+        // Create current date to set as addEvent start/end
+        // TODO: 4/3/2019 get formatting for date time from phone 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         Date mdate = sdf.parse(startDate.getText().toString() + " " + startTime.getText().toString());
         long startDateMillis = mdate.getTime();

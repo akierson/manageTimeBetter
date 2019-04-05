@@ -1,5 +1,8 @@
 package com.akierson.managetimebetter;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 
+@Entity
 public class CalendarModel {
 
     public CalendarModel () {
@@ -20,6 +24,8 @@ public class CalendarModel {
     //TODO: Load Events from Table
     Calendar cal = Calendar.getInstance();
     // User account
+    @PrimaryKey
+    public int userAccount;
 
     // Events from calendar
 
@@ -28,7 +34,6 @@ public class CalendarModel {
     // Calendar accounts
 
     // private Methods
-    //
 
     // Methods
     public void getPlannedEvents (Date startDay, Date endDay) {

@@ -2,11 +2,19 @@ package com.akierson.managetimebetter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Switch;
+
+import java.util.Date;
+
+import static com.akierson.managetimebetter.R.id.nextDay;
 
 
 /**
@@ -17,9 +25,17 @@ import android.view.ViewGroup;
  * Use the {@link CalendarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalendarFragment extends Fragment {
-    
+public class CalendarFragment extends Fragment implements View.OnClickListener {
+
+    private static final String TAG = "CalendarFragment";
+
     private OnFragmentInteractionListener mListener;
+    private Date mStartDate = new Date();
+    private Date mEndDate = new Date();
+
+    // Layout items
+    ImageButton nextDay;
+    ImageButton prevDay;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -43,9 +59,17 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+        View mView = inflater.inflate(R.layout.fragment_calendar, container, false);
         
         //TODO Load events from calendar model
+        nextDay = mView.findViewById(R.id.nextDay);
+        prevDay = mView.findViewById(R.id.prevDay);
+
+        nextDay.setOnClickListener(this);
+        prevDay.setOnClickListener(this);
+
+        return mView;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -53,7 +77,6 @@ public class CalendarFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-        // TODO: 3/20/2019 Add prev day/next day handlers 
     }
 
     @Override
@@ -62,12 +85,12 @@ public class CalendarFragment extends Fragment {
 
         // TODO: 3/13/2019 Requires listener if passing information between
         // TODO: 3/20/2019 pass currently selected day(s) 
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -75,6 +98,21 @@ public class CalendarFragment extends Fragment {
         //TODO: save start and end days.
         super.onDetach();
         mListener = null;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.nextDay:
+                // TODO: 4/3/2019 Go to next day
+                Log.d(TAG, "onClick: Next Day Clicked");
+                break;
+            case R.id.prevDay:
+                // TODO: 4/3/2019 Go to prev day
+                Log.d(TAG, "onClick: Prev Day Clicked");
+                break;
+        }
     }
 
     /**

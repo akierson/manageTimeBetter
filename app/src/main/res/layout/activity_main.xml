@@ -49,5 +49,6 @@
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         android:onClick="onFabPress"/>
+    <include layout="@layout/fab_menu"/>
 
 </android.support.constraint.ConstraintLayout>

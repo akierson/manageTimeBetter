@@ -18,7 +18,9 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
     </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/recycleViewGoals"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
