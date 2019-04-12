@@ -3,12 +3,10 @@ package com.akierson.managetimebetter;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.icu.text.SimpleDateFormat;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.provider.CalendarContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -18,13 +16,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.Format;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.TimeZone;
 
 public class AddEvent extends Activity {
 
     private static final String TAG = "Add Event";
+
+    Calendar currentDate;
+    Calendar startDate;
+    Calendar endDate;
+    SimpleDateFormat dateParse;
 
     private DatePickerDialog.OnDateSetListener startDateChange;
     private DatePickerDialog.OnDateSetListener endDateChange;
@@ -32,9 +37,9 @@ public class AddEvent extends Activity {
     private TimePickerDialog.OnTimeSetListener endTimeChange;
 
     private TextView title;
-    private TextView startDate;
+    private TextView startDateTv;
     private TextView startTime;
-    private TextView endDate;
+    private TextView endDateTv;
     private TextView endTime;
     private TextView location;
     private TextView notes;
@@ -49,47 +54,68 @@ public class AddEvent extends Activity {
 
         // Add Toolbar
 
-        String today = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        // Get localized date format from phone
+        Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
+        String pattern = ((SimpleDateFormat)dateFormat).toLocalizedPattern();
+        dateParse = new SimpleDateFormat(pattern);
+
+        // Dates
+        currentDate = Calendar.getInstance();
+        startDate = currentDate;
+        endDate = currentDate;
 
         title = findViewById(R.id.addEvent_title);
-        startDate = findViewById(R.id.addEvent_startDate);
+        startDateTv = findViewById(R.id.addEvent_startDate);
         startTime = findViewById(R.id.addEvent_startTime);
-        endDate = findViewById(R.id.addEvent_endDate);
+        endDateTv = findViewById(R.id.addEvent_endDate);
         endTime = findViewById(R.id.addEvent_endTime);
         location = findViewById(R.id.addEvent_location);
         notes = findViewById(R.id.addEvent_notes);
         allDay = findViewById(R.id.addEvent_allDay);
         busy = findViewById(R.id.addEvent_busy);
 
-        startDate.setText(today);
-        endDate.setText(today);
-        startTime.setText(String.valueOf(Calendar.HOUR) + ":00");
-        endTime.setText(String.valueOf(Calendar.HOUR+1) + ":00");
+        startDateTv.setText(dateParse.format(startDate.getTime()));
+        endDateTv.setText(dateParse.format(startDate.getTime()));
+
 
         startDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyyy: " + month + "/" + day + "/" + year);
+                startDate.set(Calendar.DAY_OF_MONTH, day);
+                startDate.set(Calendar.MONTH, month);
+                startDate.set(Calendar.YEAR, year);
 
-                String date = month + "/" + day + "/" + year;
-                startDate.setText(date);
+                // If startDate is more than endDate, change endDate = startDate
+                if (startDate.compareTo(endDate) < 1 ) {
+                    endDate = startDate;
+                }
+
+                Log.d(TAG, "onDateSet: " + dateParse.format(startDate.getTime()));
+                startDateTv.setText(dateParse.format(startDate.getTime()));
             }
         };
         endDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-                String date = month + "/" + day + "/" + year;
-                endDate.setText(date);
+
+                endDate.set(Calendar.DAY_OF_MONTH, day);
+                endDate.set(Calendar.MONTH, month);
+                endDate.set(Calendar.YEAR, year);
+
+                // If startDate is more than endDate, change endDate = startDate
+                if (startDate.compareTo(endDate) < 1 ) {
+                    startDate = endDate;
+                }
+
+                Log.d(TAG, "onDateSet: " + dateParse.format(endDate.getTime()));
+                endDateTv.setText(dateParse.format(endDate.getTime()));
             }
         };
 
         startTimeChange = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String time = hourOfDay + ":" + minute;
+                String time = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
                 startTime.setText(time);
             }
         };
@@ -97,47 +123,53 @@ public class AddEvent extends Activity {
         endTimeChange = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String time = hourOfDay + ":" + minute;
+                String time = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
                 endTime.setText(time);
             }
         };
     }
 
     public void addEvent(View view) throws ParseException {
-        // Create current date to set as addEvent start/end
-        // TODO: 4/3/2019 get formatting for date time from phone 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-        Date mdate = sdf.parse(startDate.getText().toString() + " " + startTime.getText().toString());
-        long startDateMillis = mdate.getTime();
 
-        mdate = sdf.parse(endDate.getText().toString() + " " + endTime.getText().toString());
-        long endDateMillis = mdate.getTime();
-
-
-        // TODO: opening calendar and not just adding to calendar ??
-        Intent intent = new Intent(Intent.ACTION_INSERT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra(CalendarContract.Events.TITLE, title.getText());
-        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                startDateMillis);
-        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
-                endDateMillis);
-        intent.putExtra(CalendarContract.Events.ALL_DAY, allDay.isChecked());
-        intent.putExtra(CalendarContract.Events.DESCRIPTION, notes.getText());
-        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, location.getText());
-        if (busy.isChecked()) {
-            intent.putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        // TODO: 4/11/2019 add Checks
+        // Insert Event
+        ContentResolver cr = getContentResolver();
+        ContentValues values = new ContentValues();
+        TimeZone timeZone = TimeZone.getDefault();
+        values.put(CalendarContract.Events.DTSTART, startDate.getTimeInMillis());
+        values.put(CalendarContract.Events.DTEND, endDate.getTimeInMillis());
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+        if (String.valueOf(title.getText()) != null) {
+            values.put(CalendarContract.Events.TITLE, String.valueOf(title.getText()));
         }
+        if (String.valueOf(notes.getText()) != null) {
+            values.put(CalendarContract.Events.DESCRIPTION, String.valueOf(notes.getText()));
+        }
+        // all day
+        values.put(CalendarContract.Events.ALL_DAY, allDay.isChecked());
+        //location
+        if (String.valueOf(location.getText()) != null) {
+            values.put(CalendarContract.Events.EVENT_LOCATION, String.valueOf(location.getText()));
+        }
+        //Busy?
+        if (busy.isChecked()) {
+            values.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        }
+        // TODO: have user pick Calendar ID
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
-        startActivity(intent);
+        // Retrieve ID for new event
+        String eventID = uri.getLastPathSegment();
+
+        // TODO: 4/11/2019 add Event to attached goal area
     }
 
 
     public void setStartDate(View view) {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int year = startDate.get(Calendar.YEAR);
+        int month = startDate.get(Calendar.MONTH);
+        int day = startDate.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(
                 this,
@@ -146,9 +178,8 @@ public class AddEvent extends Activity {
         dialog.show();
     }
     public void setStartTime(View view) {
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
+        int hour = startDate.get(Calendar.HOUR_OF_DAY);
+        int minute = startDate.get(Calendar.MINUTE);
 
 
         TimePickerDialog dialog = new TimePickerDialog(
@@ -159,10 +190,9 @@ public class AddEvent extends Activity {
     }
 
     public void setEndDate(View view) {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int year = endDate.get(Calendar.YEAR);
+        int month = endDate.get(Calendar.MONTH);
+        int day = endDate.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(
                 this,
@@ -171,9 +201,8 @@ public class AddEvent extends Activity {
         dialog.show();
     }
     public void setEndTime(View view) {
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
+        int hour = endDate.get(Calendar.HOUR_OF_DAY);
+        int minute = endDate.get(Calendar.MINUTE);
 
 
         TimePickerDialog dialog = new TimePickerDialog(
@@ -182,6 +211,8 @@ public class AddEvent extends Activity {
                 hour, minute, DateFormat.is24HourFormat(this));
         dialog.show();
     }
+
+    // TODO: 4/11/2019 Add location validation
 
     //TODO: cancel not working
     public void cancel(View view) {

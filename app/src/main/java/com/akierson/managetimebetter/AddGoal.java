@@ -56,6 +56,7 @@ public class AddGoal extends AppCompatActivity {
 
         // TODO: 3/14/2019 Add Goal to SQLite Table
 
+
         return true;
     }
 }

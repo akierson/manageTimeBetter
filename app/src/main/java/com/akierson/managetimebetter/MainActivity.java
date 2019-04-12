@@ -1,26 +1,20 @@
 package com.akierson.managetimebetter;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.annotation.SuppressLint;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.BaseColumns;
+import android.os.Parcelable;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,21 +24,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 
 // Loads Calendars from phone and stores usage events from recent times
 public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener{
+    // Constants for intents, tags and permission numeration
+    private static final String START_DATE = "startDate";
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
     private final int REQUEST_PERMISSION_WRITE_CALENDAR=2;
@@ -60,13 +47,18 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
 
     Animation showFabEvent;
     Animation showFabGoals;
+    Animation hideFabEvent;
+    Animation hideFabGoals;
+
+    boolean fabMenuOpen = false;
 
     // Data Instances
     private Calendar cal = Calendar.getInstance();
     private int eventIndex;
+
     // Public in order to be accessed from frags
-    //TODO: Add DashboardModel, GoalModel at astart for easier access
-    public CalendarModel calModel = new CalendarModel();
+    //TODO: Add DashboardModel, GoalModel at start for easier access
+    RoomDatabase.Builder<GoalAppDatabase> gdb;
 
     // Fragments
     CalendarFragment calFrag;
@@ -92,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // Set database
+        gdb  = Room.databaseBuilder(getApplicationContext(), GoalAppDatabase.class, "goal-database");
+
         // Get Layout items
         fabEvent = findViewById(R.id.fab_event);
         fabGoals = findViewById(R.id.fab_goal);
@@ -99,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
         // Add Fab Animations
         showFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_event);
         showFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_goals);
+        hideFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_event);
+        hideFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_goals);
 
         // Initialise Fragments
         calFrag = new CalendarFragment();
@@ -210,28 +207,58 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     public void onFabPress(View fab){
         // open new window with event adding
         // TODO: 3/20/2019 Pass current date to addEvent for better workage
-        // TODO: 4/3/2019 get current fragment
         // Add Two fabs
         // Move FAB Event
         FrameLayout.LayoutParams layoutParamsEvent = (FrameLayout.LayoutParams) fabEvent.getLayoutParams();
         FrameLayout.LayoutParams layoutParamsGoals = (FrameLayout.LayoutParams) fabGoals.getLayoutParams();
 
-        layoutParamsEvent.rightMargin += (int) (fabEvent.getWidth() * 1.7);
-        layoutParamsGoals.rightMargin += (int) (fabGoals.getWidth() * 1.7);
-        layoutParamsEvent.leftMargin += (int) (fabEvent.getHeight() * 0.25);
-        layoutParamsGoals.leftMargin += (int) (fabGoals.getHeight() * 0.25);
-        fabEvent.setLayoutParams(layoutParamsEvent);
-        fabGoals.setLayoutParams(layoutParamsGoals);
-        fabEvent.startAnimation(showFabEvent);
-        fabGoals.startAnimation(showFabGoals);
-        fabEvent.setClickable(true);
-        fabGoals.setClickable(true);
+        if (!fabMenuOpen) {
+            layoutParamsEvent.bottomMargin += (int) (fabEvent.getHeight() * 1.7);
+            layoutParamsGoals.bottomMargin += (int) (fabGoals.getHeight() * 3.0);
+            fabEvent.setLayoutParams(layoutParamsEvent);
+            fabGoals.setLayoutParams(layoutParamsGoals);
+            fabEvent.startAnimation(showFabEvent);
+            fabGoals.startAnimation(showFabGoals);
+            fabEvent.setVisibility(View.VISIBLE);
+            fabGoals.setVisibility(View.VISIBLE);
+            fabEvent.setClickable(true);
+            fabGoals.setClickable(true);
 
-//        Intent intent = new Intent(this, AddEvent.class);
-//        startActivity(intent);
+            fabMenuOpen = true;
+        } else {
+            layoutParamsEvent.bottomMargin -= (int) (fabEvent.getHeight() * 1.7);
+            layoutParamsGoals.bottomMargin -= (int) (fabGoals.getHeight() * 3.0);
+            fabEvent.setLayoutParams(layoutParamsEvent);
+            fabGoals.setLayoutParams(layoutParamsGoals);
+            fabEvent.startAnimation(hideFabEvent);
+            fabGoals.startAnimation(hideFabGoals);
+            fabEvent.setVisibility(View.INVISIBLE);
+            fabGoals.setVisibility(View.INVISIBLE);
+            fabEvent.setClickable(false);
+            fabGoals.setClickable(false);
+
+            fabMenuOpen = false;
+        }
     }
+
+    // TODO: Pass goals db to each new activitity
     // Fab Event
+    public void onFabEventPress (View fab) {
+        Intent intent = new Intent(this, AddEvent.class);
+        // TODO: 4/11/2019 pass goals database
+//        intent.putExtra("goalDB", (Parcelable) gdb);
+        onFabPress(fab);
+        startActivity(intent);
+    }
+
     // Fab Goal
+    public void onFabGoalPress (View fab) {
+        Intent intent = new Intent(this, AddGoal.class);
+        // TODO: 4/11/2019 pass goals database
+//        intent.putExtra("goalDB", (Parcelable) gdb);
+        onFabPress(fab);
+        startActivity(intent);
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

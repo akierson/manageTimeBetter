@@ -53,6 +53,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         
         //TODO: Load calendar from current day
 
+
     }
 
     @Override
