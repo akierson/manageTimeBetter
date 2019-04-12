@@ -51,8 +51,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        //TODO: Load calendar from current day
-
+        // TODO: Load calendar from current day
+        // TODO: using calendar model
+        // TODO: 4/12/2019 Get model from instance
 
     }
 

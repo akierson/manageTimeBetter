@@ -11,13 +11,14 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -47,12 +48,13 @@ public class AddEvent extends Activity {
     private Switch allDay;
     private Switch busy;
 
+    Button addEventButton;
+    Button cancelButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
-
-        // Add Toolbar
 
         // Get localized date format from phone
         Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
@@ -77,6 +79,8 @@ public class AddEvent extends Activity {
         startDateTv.setText(dateParse.format(startDate.getTime()));
         endDateTv.setText(dateParse.format(startDate.getTime()));
 
+        addEventButton = findViewById(R.id.addEvent_addEvent);
+        cancelButton = findViewById(R.id.addEvent_cancel);
 
         startDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -129,7 +133,7 @@ public class AddEvent extends Activity {
         };
     }
 
-    public void addEvent(View view) throws ParseException {
+    public void addEvent(View view) {
 
         // TODO: 4/11/2019 add Checks
         // Insert Event
@@ -139,16 +143,20 @@ public class AddEvent extends Activity {
         values.put(CalendarContract.Events.DTSTART, startDate.getTimeInMillis());
         values.put(CalendarContract.Events.DTEND, endDate.getTimeInMillis());
         values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
-        if (String.valueOf(title.getText()) != null) {
+        Log.d(TAG, "addEvent: " + title.getText());
+        if (title.getText().length() > 0) {
             values.put(CalendarContract.Events.TITLE, String.valueOf(title.getText()));
+        } else {
+            Toast.makeText(getApplicationContext(), "Please fill out all fields!", Toast.LENGTH_LONG).show();
+            return;
         }
-        if (String.valueOf(notes.getText()) != null) {
+        if (notes.getText().length() > 0) {
             values.put(CalendarContract.Events.DESCRIPTION, String.valueOf(notes.getText()));
         }
         // all day
         values.put(CalendarContract.Events.ALL_DAY, allDay.isChecked());
         //location
-        if (String.valueOf(location.getText()) != null) {
+        if (location.getText().length() > 0) {
             values.put(CalendarContract.Events.EVENT_LOCATION, String.valueOf(location.getText()));
         }
         //Busy?
@@ -161,10 +169,17 @@ public class AddEvent extends Activity {
 
         // Retrieve ID for new event
         String eventID = uri.getLastPathSegment();
+        Log.d(TAG, "addEvent: Event " + eventID + " added");
+
+        // return to previous screen
+        finish();
 
         // TODO: 4/11/2019 add Event to attached goal area
     }
 
+    public void cancelAddEvent(View view) {
+        finish();
+    }
 
     public void setStartDate(View view) {
         int year = startDate.get(Calendar.YEAR);
@@ -213,9 +228,4 @@ public class AddEvent extends Activity {
     }
 
     // TODO: 4/11/2019 Add location validation
-
-    //TODO: cancel not working
-    public void cancel(View view) {
-        finish();
-    }
 }

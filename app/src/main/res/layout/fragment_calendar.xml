@@ -22,8 +22,8 @@
             android:orientation="horizontal">
 
             <ImageButton
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:id="@+id/prevDay"
-                style="@android:style/Widget.Holo.Light.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -42,8 +42,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
             <ImageButton
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:id="@+id/nextDay"
-                style="@android:style/Widget.Holo.Light.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

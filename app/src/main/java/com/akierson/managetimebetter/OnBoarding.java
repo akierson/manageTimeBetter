@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class OnBoarding extends Activity {
-    // Creat this shit
+    // TODO: 4/12/2019 Create OnBoarding and adding initial goals 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

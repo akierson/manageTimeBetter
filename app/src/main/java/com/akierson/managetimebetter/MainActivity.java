@@ -30,6 +30,8 @@ import java.util.Calendar;
 
 // Loads Calendars from phone and stores usage events from recent times
 public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener{
+
+
     // Constants for intents, tags and permission numeration
     private static final String START_DATE = "startDate";
     // Permission status

@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Goal {
+    // TODO: 4/12/2019 Reasearch Room Persistance 
     @PrimaryKey
     private int id;
     @ColumnInfo(name = "name")

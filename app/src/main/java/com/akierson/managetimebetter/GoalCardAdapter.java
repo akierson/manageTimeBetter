@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class GoalCardAdapter extends RecyclerView.Adapter<GoalCardAdapter.GoalCardHolder> {
-
+    // TODO: 4/12/2019 Get Data from table 
     private Context mCtx;
     private List<Goal> goalList;
 

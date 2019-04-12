@@ -55,7 +55,8 @@ public class AddGoal extends AppCompatActivity {
         Goal mGoal = new Goal(Integer.parseInt(goalLevel), description, recurring);
 
         // TODO: 3/14/2019 Add Goal to SQLite Table
-
+        // TODO: 4/12/2019 add reminder event 
+        // TODO: 4/12/2019 send to add event for activity for result 
 
         return true;
     }
