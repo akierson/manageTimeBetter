@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
         <!--TODO: Add Name and Description-->
-        <TextView
+        <EditText
             android:id="@+id/addGoal_goalDescription"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -62,6 +62,14 @@
             android:text="@string/goalDescriptionTextView"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="229dp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/goalDescriptionTextView" />
 
         <Spinner
             android:id="@+id/addGoal_goalLevel"
@@ -100,19 +108,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/addGoal_goalDescription" />
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/addGoal_goalRecur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/addGoal_recurring"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="340dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"
             android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/addGoal_goalRecur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addGoal_recurring"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="340dp" />
 
             <Switch
                 android:id="@+id/addGoal_addReminder"

@@ -56,11 +56,11 @@ public class AddGoal extends AppCompatActivity {
             return false;
         }
 
-        String goalLevel = String.valueOf(gLevelButton.getText());
+        String goalLevel = (String) gLevel.getSelectedItem();
         String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
         boolean recurring = gRecurring.isEnabled();                                     // will always have a value
 
-        Goal mGoal = new Goal(goalLevel, description, recurring);
+        Goal mGoal = new Goal(description, recurring);
 
         // Add Goal to Room Table
         mCal.addGoal(mGoal);

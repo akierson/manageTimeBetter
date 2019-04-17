@@ -10,9 +10,9 @@ public class Goal {
     @PrimaryKey
     private int id;
     @ColumnInfo(name = "name")
-    private int name;
+    private String name;
     @ColumnInfo(name = "level")
-    private int level;
+    private String level;
     @ColumnInfo(name = "description")
     private String description;
     @ColumnInfo(name = "area")
@@ -22,9 +22,11 @@ public class Goal {
     @ColumnInfo(name = "attached_event")
     public int attached_event_id;
 
-    public Goal(int level, String description, boolean recursion) {
-        this.level = level;
+    public Goal(String name, String description, String area, String level, boolean recursion) {
+        this.name = name;
         this.description = description;
+        this.area = area;
+        this.level = level;
         this.recursion = recursion;
     }
 
@@ -36,11 +38,11 @@ public class Goal {
         this.id = id;
     }
 
-    public int getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
@@ -68,11 +70,11 @@ public class Goal {
         this.attached_event_id = attached_event_id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

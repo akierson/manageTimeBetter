@@ -55,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
+            android:id="@+id/addEvent_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -66,14 +67,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/addEvent_eventTitle"
                 android:inputType="date|textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_allDay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:autofillHints="" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
                 android:id="@+id/addEvent_allDay"
@@ -96,38 +97,38 @@
                     android:id="@+id/addEvent_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/addEvent_start"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_endDate"
                     app:layout_constraintEnd_toEndOf="@+id/addEvent_allDay"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_endTime"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay" />
 
                 <TextView
                     android:id="@+id/addEvent_startDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:onClick="setStartDate"
                     android:text="@string/addEvent_startDate"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_endDate"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_startTime"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_endTime"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_endTime" />
 
                 <TextView
                     android:id="@+id/addEvent_startTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:onClick="setStartTime"
                     android:text="@string/addEvent_startTime"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_startDate"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@+id/addEvent_end"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_end"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_end" />
             </LinearLayout>
 
             <LinearLayout
@@ -141,38 +142,38 @@
                     android:id="@+id/addEvent_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/addEvent_end"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_startTime"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_endTime"
                     app:layout_constraintStart_toStartOf="@+id/addEvent_allDay"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay" />
 
                 <TextView
                     android:id="@+id/addEvent_endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:onClick="setEndDate"
                     android:text="@string/addEvent_endDate"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_location"
                     app:layout_constraintEnd_toEndOf="@+id/addEvent_start"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_startDate"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_start"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_start" />
 
                 <TextView
                     android:id="@+id/addEvent_endTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:onClick="setEndTime"
                     android:text="@string/addEvent_endTime"
                     app:layout_constraintBottom_toTopOf="@+id/addEvent_startDate"
                     app:layout_constraintEnd_toStartOf="@+id/addEvent_start"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/addEvent_end"
-                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay"
-                    android:layout_weight="1"/>
+                    app:layout_constraintTop_toBottomOf="@+id/addEvent_allDay" />
             </LinearLayout>
 
             <Spinner
@@ -186,25 +187,25 @@
                 android:id="@+id/addEvent_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/addEvent_location"
                 android:inputType="textPostalAddress"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_notes"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:autofillHints="" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/addEvent_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/addEvent_notes"
                 android:inputType="text"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_busy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:autofillHints="" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Switch
                 android:id="@+id/addEvent_busy"

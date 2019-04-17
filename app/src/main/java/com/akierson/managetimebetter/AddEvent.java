@@ -88,65 +88,66 @@ public class AddEvent extends Activity {
 
         // Populate fields
         // TODO: have user pick Calendar ID
-        String userCals =  CalendarContract.Calendars.ACCOUNT_NAME;
-        SpinnerAdapter adapter = new SpinnerAdapter(2, layout.simple_spinner_item, userCalendar) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                return null;
-            }
-
-            @Override
-            public void registerDataSetObserver(DataSetObserver observer) {
-
-            }
-
-            @Override
-            public void unregisterDataSetObserver(DataSetObserver observer) {
-
-            }
-
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public boolean hasStableIds() {
-                return false;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return null;
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                return 0;
-            }
-
-            @Override
-            public int getViewTypeCount() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-        };
-        adapter.getDropDownView(R.layout.simple_spinner_dropdown_item);
-        userCalendar.setAdapter(adapter);
+        // TODO: 4/16/2019 Fix so it doesn't crash
+//        String userCals =  CalendarContract.Calendars.ACCOUNT_NAME;
+//        SpinnerAdapter adapter = new SpinnerAdapter() {
+//            @Override
+//            public void registerDataSetObserver(DataSetObserver observer) {
+//
+//            }
+//
+//            @Override
+//            public void unregisterDataSetObserver(DataSetObserver observer) {
+//
+//            }
+//
+//            @Override
+//            public int getCount() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public Object getItem(int position) {
+//                return null;
+//            }
+//
+//            @Override
+//            public long getItemId(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public boolean hasStableIds() {
+//                return false;
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                return null;
+//            }
+//
+//            @Override
+//            public int getItemViewType(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int getViewTypeCount() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public boolean isEmpty() {
+//                return false;
+//            }
+//
+//            @Override
+//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//                return null;
+//            }
+//        };
+//        View dropDownView = (View) adapter.getDropDownView(R.layout.support_simple_spinner_dropdown_item, userCalendar, (ViewGroup) findViewById(R.id.addEvent_linearLayout));
+//        userCalendar.setAdapter(adapter);
         startDateTv.setText(dateParse.format(startDate.getTime()));
         endDateTv.setText(dateParse.format(startDate.getTime()));
 

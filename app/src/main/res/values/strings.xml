@@ -59,7 +59,7 @@
     <string name="err_addGoal_noDescr">Goal Name Required</string>
     <string name="allowPersmissions">Please allow this app permissions in order to function</string>
     <string name="addEvent_error">Please fill out all fields!</string>
-    <string name="addEvent_eventAdded">Event succussfully added!</string>
+    <string name="addEvent_eventAdded">Event successfully added!</string>
     <!-- TODO: add from Table -->
     <string-array name="goalAreas">
         <item>Financial</item>
