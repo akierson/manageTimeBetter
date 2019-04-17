@@ -43,18 +43,23 @@
     <string name="addEvent_busy">Show as Busy</string>
     <string name="addEvent_add">Add Event</string>
     <string name="title_activity_add_goal">Add Goal</string>
-    <string name="goalDescriptionTextView">Goal Description</string>
-    <string name="goalLevel_5year">5 Year</string>
-    <string name="goalLevel_1year">1 Year Goal</string>
-    <string name="goalLevel_1month">1 Month Goal</string>
-    <string name="goalLevel_1week">This Week\'s Goal</string>
-    <string name="goalLevel_1day">Today\'s Goal</string>
+    <string name="goalDescriptionTextView">What is your goal?</string>
+    <string-array name="goalLevel">
+        <string name="goalLevel_1day">Today</string>
+        <string name="goalLevel_1week">This Week</string>
+        <string name="goalLevel_1month">1 Month</string>
+        <string name="goalLevel_1year">1 Year</string>
+        <string name="goalLevel_5year">5 Year</string>
+    </string-array>
     <string name="addGoal_button">Achieve It!</string>
     <string name="addGoal_addGoalArea">+</string>
     <string name="addGoal_recurring">Recurring</string>
     <string name="addGoalCancel">Cancel</string>
     <string name="goalTitle">Goals</string>
     <string name="err_addGoal_noDescr">Goal Name Required</string>
+    <string name="allowPersmissions">Please allow this app permissions in order to function</string>
+    <string name="addEvent_error">Please fill out all fields!</string>
+    <string name="addEvent_eventAdded">Event succussfully added!</string>
     <!-- TODO: add from Table -->
     <string-array name="goalAreas">
         <item>Financial</item>

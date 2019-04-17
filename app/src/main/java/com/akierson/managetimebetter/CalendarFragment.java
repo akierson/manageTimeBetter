@@ -2,7 +2,6 @@ package com.akierson.managetimebetter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Switch;
 
+import java.io.Serializable;
 import java.util.Date;
-
-import static com.akierson.managetimebetter.R.id.nextDay;
 
 
 /**
@@ -28,10 +25,12 @@ import static com.akierson.managetimebetter.R.id.nextDay;
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CalendarFragment";
+    private static final String MCALKEY = "mCalData";
 
     private OnFragmentInteractionListener mListener;
     private Date mStartDate = new Date();
     private Date mEndDate = new Date();
+    private CalendarDataModel mCalModel;
 
     // Layout items
     ImageButton nextDay;
@@ -52,9 +51,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         
         // TODO: Load calendar from current day
-        // TODO: using calendar model
+        // Using calendar model
+        mCalModel = new CalendarDataModel(this.getActivity());
         // TODO: 4/12/2019 Get model from instance
 
+        // TODO: 4/13/2019 Create view based and date range 
     }
 
     @Override
@@ -77,7 +78,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            // TODO: 4/12/2019 What went here?
+            return;
         }
     }
 

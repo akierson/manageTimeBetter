@@ -1,18 +1,23 @@
 package com.akierson.managetimebetter;
 
+import android.R.layout;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -48,6 +53,8 @@ public class AddEvent extends Activity {
     private Switch allDay;
     private Switch busy;
 
+    private Spinner userCalendar;
+
     Button addEventButton;
     Button cancelButton;
 
@@ -55,6 +62,7 @@ public class AddEvent extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
 
         // Get localized date format from phone
         Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
@@ -66,6 +74,7 @@ public class AddEvent extends Activity {
         startDate = currentDate;
         endDate = currentDate;
 
+        // Get layout items
         title = findViewById(R.id.addEvent_title);
         startDateTv = findViewById(R.id.addEvent_startDate);
         startTime = findViewById(R.id.addEvent_startTime);
@@ -75,7 +84,69 @@ public class AddEvent extends Activity {
         notes = findViewById(R.id.addEvent_notes);
         allDay = findViewById(R.id.addEvent_allDay);
         busy = findViewById(R.id.addEvent_busy);
+        userCalendar = findViewById(R.id.addEvent_userCalendar);
 
+        // Populate fields
+        // TODO: have user pick Calendar ID
+        String userCals =  CalendarContract.Calendars.ACCOUNT_NAME;
+        SpinnerAdapter adapter = new SpinnerAdapter(2, layout.simple_spinner_item, userCalendar) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                return null;
+            }
+
+            @Override
+            public void registerDataSetObserver(DataSetObserver observer) {
+
+            }
+
+            @Override
+            public void unregisterDataSetObserver(DataSetObserver observer) {
+
+            }
+
+            @Override
+            public int getCount() {
+                return 0;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public boolean hasStableIds() {
+                return false;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                return null;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return 0;
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+        };
+        adapter.getDropDownView(R.layout.simple_spinner_dropdown_item);
+        userCalendar.setAdapter(adapter);
         startDateTv.setText(dateParse.format(startDate.getTime()));
         endDateTv.setText(dateParse.format(startDate.getTime()));
 
@@ -134,8 +205,6 @@ public class AddEvent extends Activity {
     }
 
     public void addEvent(View view) {
-
-        // TODO: 4/11/2019 add Checks
         // Insert Event
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
@@ -147,7 +216,7 @@ public class AddEvent extends Activity {
         if (title.getText().length() > 0) {
             values.put(CalendarContract.Events.TITLE, String.valueOf(title.getText()));
         } else {
-            Toast.makeText(getApplicationContext(), "Please fill out all fields!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.addEvent_error), Toast.LENGTH_LONG).show();
             return;
         }
         if (notes.getText().length() > 0) {
@@ -163,7 +232,6 @@ public class AddEvent extends Activity {
         if (busy.isChecked()) {
             values.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         }
-        // TODO: have user pick Calendar ID
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
@@ -172,9 +240,11 @@ public class AddEvent extends Activity {
         Log.d(TAG, "addEvent: Event " + eventID + " added");
 
         // return to previous screen
-        finish();
+        Toast.makeText(getApplicationContext(), getString(R.string.addEvent_eventAdded), Toast.LENGTH_LONG).show();
 
         // TODO: 4/11/2019 add Event to attached goal area
+
+        finish();
     }
 
     public void cancelAddEvent(View view) {

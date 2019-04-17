@@ -1,5 +1,6 @@
 package com.akierson.managetimebetter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class DashboardFragment extends Fragment {
     String mStartDay;
     String mEndDay;
 
+    @SuppressLint("ValidFragment")
     public DashboardFragment() {
         // Required empty public constructor
     }

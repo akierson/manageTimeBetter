@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!--TODO: Add Reminder layout piece-->
+    <!--TODO: Fix Toolbar-->
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -24,118 +26,110 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="cancel"
                 android:text="@string/addGoalCancel"
-                android:textAlignment="center"
-                android:onClick="cancel"/>
+                android:textAlignment="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="addGoal"
                 android:text="@string/addGoal_button"
-                android:textAlignment="center"
-                android:onClick="addGoal"/>
+                android:textAlignment="center" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/addGoal_goalDescription"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/goalDescriptionTextView"
-        app:layout_constraintBottom_toTopOf="@+id/addGoal_radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/addGoal_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_weight="1"
-        android:entries="@array/goalAreas"
-        android:spinnerMode="dialog"
-        app:layout_constraintBottom_toBottomOf="@+id/addGoal_addArea"
-        app:layout_constraintEnd_toStartOf="@+id/addGoal_addArea"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addGoal_addArea" />
-
-    <RadioGroup
-        android:id="@+id/addGoal_radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="fill_vertical"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/addGoal_switch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addGoal_goalDescription">
-
-        <RadioButton
-            android:id="@+id/addGoal_5y"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/goalLevel_5year" />
-
-        <RadioButton
-            android:id="@+id/addGoal_1y"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/goalLevel_1year" />
-
-        <RadioButton
-            android:id="@+id/addGoal_1m"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/goalLevel_1month" />
-
-        <RadioButton
-            android:id="@+id/addGoal_1w"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/goalLevel_1week" />
-
-        <RadioButton
-            android:id="@+id/addGoal_1d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/goalLevel_1day" />
-
-    </RadioGroup>
-
-    <Switch
-        android:id="@+id/addGoal_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/addGoal_recurring"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addGoal_radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
+        <!--TODO: Add Name and Description-->
+        <TextView
+            android:id="@+id/addGoal_goalDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="@string/goalDescriptionTextView"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="229dp" />
 
-    <Button
-        android:id="@+id/addGoal_addArea"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/addGoal_addGoalArea"
-        app:layout_constraintBottom_toTopOf="@+id/addGoal_radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/addGoal_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/addGoal_goalDescription" />
+        <Spinner
+            android:id="@+id/addGoal_goalLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/goalLevel" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/addGoal_goalArea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:entries="@array/goalAreas"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toBottomOf="@+id/addGoal_addArea"
+                app:layout_constraintEnd_toStartOf="@+id/addGoal_addArea"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/addGoal_addArea" />
+
+            <Button
+                android:id="@+id/addGoal_addArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/addGoal_addGoalArea"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addGoal_goalArea"
+                app:layout_constraintTop_toBottomOf="@+id/addGoal_goalDescription" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/addGoal_goalRecur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addGoal_recurring"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="340dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="fill"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/addGoal_addReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Reminder"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="387dp" />
+
+            <TextView
+                android:id="@+id/addGoal_reminderDay"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Now" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

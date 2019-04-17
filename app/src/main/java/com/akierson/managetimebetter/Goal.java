@@ -15,6 +15,8 @@ public class Goal {
     private int level;
     @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "area")
+    private String area;
     @ColumnInfo(name = "recursion")
     private boolean recursion;
     @ColumnInfo(name = "attached_event")
@@ -73,6 +75,5 @@ public class Goal {
     public void setName(int name) {
         this.name = name;
     }
-    // TODO: 4/3/2019 Add methods to add goal to table 
 
 }

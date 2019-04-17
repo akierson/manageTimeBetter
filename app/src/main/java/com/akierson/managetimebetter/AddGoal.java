@@ -1,10 +1,7 @@
 package com.akierson.managetimebetter;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,27 +10,38 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import java.util.Calendar;
 
 public class AddGoal extends AppCompatActivity {
 
     TextView gDescr;
     Spinner gSpinner;
-    RadioGroup gLevel;
+    Spinner gLevel;
     Switch gRecurring;
-
+    Switch gReminder;
+    TextView gReminderDay;
+    CalendarDataModel mCal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Create layout
         setContentView(R.layout.activity_add_goal);
 
+        // Get views
         gDescr = findViewById(R.id.addGoal_goalDescription);
-        gSpinner = findViewById(R.id.addGoal_spinner);
-        gLevel = findViewById(R.id.addGoal_radioGroup);
-        gRecurring = findViewById(R.id.addGoal_switch);
+        gSpinner = findViewById(R.id.addGoal_goalArea);
+        gLevel = findViewById(R.id.addGoal_goalLevel);
+        gRecurring = findViewById(R.id.addGoal_goalRecur);
+        gReminder = findViewById(R.id.addGoal_addReminder);
+        gReminderDay = findViewById(R.id.addGoal_reminderDay);
 
+        // Instantiate data models
+        mCal = new CalendarDataModel(this);
+        // TODO: 4/13/2019 Set day of reminder
+        gReminderDay.setText(mCal.getStartDay());
+        // TODO: 4/13/2019 add onclick listener to change time of reminder 
 
     }
 
@@ -44,20 +52,21 @@ public class AddGoal extends AppCompatActivity {
         if (gDescr.getText() != null) {
             description = (String) gDescr.getText();
         } else {
-            Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noDescr), Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noDescr), Toast.LENGTH_LONG).show();
             return false;
         }
-        RadioButton gLevelButton= findViewById(gLevel.getCheckedRadioButtonId());         // will always have a value
+
         String goalLevel = String.valueOf(gLevelButton.getText());
         String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
         boolean recurring = gRecurring.isEnabled();                                     // will always have a value
 
-        Goal mGoal = new Goal(Integer.parseInt(goalLevel), description, recurring);
+        Goal mGoal = new Goal(goalLevel, description, recurring);
 
-        // TODO: 3/14/2019 Add Goal to SQLite Table
-        // TODO: 4/12/2019 add reminder event 
+        // Add Goal to Room Table
+        mCal.addGoal(mGoal);
+        // TODO: add reminder event
         // TODO: 4/12/2019 send to add event for activity for result 
-
+        finish();
         return true;
     }
 }

@@ -26,22 +26,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import java.util.Calendar;
+import java.util.Set;
 
 
 // Loads Calendars from phone and stores usage events from recent times
-public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener {
 
 
     // Constants for intents, tags and permission numeration
     private static final String START_DATE = "startDate";
+    private static final String END_DATE = "endDate";
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
     private final int REQUEST_PERMISSION_WRITE_CALENDAR=2;
 
     // Tag for debugging
     private static final String TAG = "MainActivity";
-
-    // For stopping time usage events
 
     // Views
     FloatingActionButton fabEvent;
@@ -52,10 +52,13 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     Animation hideFabEvent;
     Animation hideFabGoals;
 
+    // Fab menu bool
     boolean fabMenuOpen = false;
 
     // Data Instances
-    private Calendar cal = Calendar.getInstance();
+    private Calendar startDateCal = Calendar.getInstance();
+    private Calendar endDateCal = Calendar.getInstance();
+    // TODO: 4/13/2019 ??
     private int eventIndex;
 
     // Public in order to be accessed from frags
@@ -67,14 +70,6 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     DashboardFragment dashFrag;
     GoalsFragment goalFrag;
 
-    //  From Documentation on Calendar Provider
-    public static final String[] FIELDS = new String[] {
-            CalendarContract.Calendars.NAME,
-            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-            CalendarContract.Calendars.CALENDAR_COLOR,
-            CalendarContract.Calendars.VISIBLE
-    };
-
     // On Create
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +78,10 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
         // Set layout
         setContentView(R.layout.activity_main);
 
+        //Set Bottom Nav
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        // Set database
-        gdb  = Room.databaseBuilder(getApplicationContext(), GoalAppDatabase.class, "goal-database");
-
+        
         // Get Layout items
         fabEvent = findViewById(R.id.fab_event);
         fabGoals = findViewById(R.id.fab_goal);
@@ -99,31 +92,40 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
         hideFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_event);
         hideFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_goals);
 
-        // Initialise Fragments
-        calFrag = new CalendarFragment();
-        dashFrag = new DashboardFragment();
-        goalFrag = new GoalsFragment();
-
-        // Add Calendar Fragment to home screen
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
+        // Create localized date variables
+        endDateCal.set(Calendar.DATE, Calendar.DATE + 2);
 
         // Check for calendar permissions
         showReadCalendarPermission();
         showWriteCalendarPermission();
 
 
+        // TODO: 4/13/2019 add on permission change to reload activity
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                 this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
             // Permission granted
             Log.d(TAG, "onCreate: Calendar Permissions Granted");
 
-            // Run query
+            // Initialise Fragments
+            Bundle bundle = new Bundle();
+            // Variables to pass
+            bundle.putSerializable(START_DATE, startDateCal.getTime());
+            bundle.putSerializable(END_DATE,endDateCal.getTime());
+            //instantiate fragments
+            calFrag = new CalendarFragment();
+            calFrag.setArguments(bundle);
+            dashFrag = new DashboardFragment();
+            dashFrag.setArguments(bundle);
+            goalFrag = new GoalsFragment();
+            goalFrag.setArguments(bundle);
+
+            // Add Calendar Fragment to home screen
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
         } else {
             showReadCalendarPermission();
             showWriteCalendarPermission();
         }
-
     }
 
     private void showReadCalendarPermission() {
@@ -206,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     }
 
     // On Fab Press
+    @SuppressLint("RestrictedApi")
     public void onFabPress(View fab){
         // open new window with event adding
         // TODO: 3/20/2019 Pass current date to addEvent for better workage

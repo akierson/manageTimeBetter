@@ -175,6 +175,13 @@
                     android:layout_weight="1"/>
             </LinearLayout>
 
+            <Spinner
+                android:id="@+id/addEvent_userCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="User Calendar"
+                android:spinnerMode="dropdown" />
+
             <EditText
                 android:id="@+id/addEvent_location"
                 android:layout_width="match_parent"
