@@ -38,6 +38,9 @@ public class CalendarDataModel {
     ContentResolver contentResolver;
     Set<String> calendars = new HashSet<String>();
 
+    String startDay;
+
+
     public CalendarDataModel(Context ctx) {
         contentResolver = ctx.getContentResolver();
         gdb = Room.databaseBuilder(ctx.getApplicationContext(), GoalAppDatabase.class, "goal-database");
@@ -77,7 +80,7 @@ public class CalendarDataModel {
 
     public void addGoal(Goal goal) {
         // TODO: 4/13/2019 Figure out Room
-        gdb.insertAll(goal);
+        gdb.getGoalDao().insertAll(goal);
     }
 
     public String getStartDay() {

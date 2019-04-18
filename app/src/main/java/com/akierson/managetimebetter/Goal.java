@@ -4,10 +4,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity (tableName = "goal")
 public class Goal {
     // TODO: 4/12/2019 Reasearch Room Persistance 
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     private int id;
     @ColumnInfo(name = "name")
     private String name;
@@ -22,12 +22,13 @@ public class Goal {
     @ColumnInfo(name = "attached_event")
     public int attached_event_id;
 
-    public Goal(String name, String description, String area, String level, boolean recursion) {
+    public Goal(String name, String description, String area, String level, boolean recursion, int eventid = null) {
         this.name = name;
         this.description = description;
         this.area = area;
         this.level = level;
         this.recursion = recursion;
+        this.attached_event_id = eventid;
     }
 
     public int getId() {
@@ -78,4 +79,11 @@ public class Goal {
         this.name = name;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 }

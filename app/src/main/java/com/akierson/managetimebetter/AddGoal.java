@@ -3,6 +3,7 @@ package com.akierson.managetimebetter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -14,7 +15,8 @@ import java.util.Calendar;
 
 public class AddGoal extends AppCompatActivity {
 
-    TextView gDescr;
+    EditText gName;
+    EditText gDescr;
     Spinner gSpinner;
     Spinner gLevel;
     Switch gRecurring;
@@ -30,6 +32,7 @@ public class AddGoal extends AppCompatActivity {
         setContentView(R.layout.activity_add_goal);
 
         // Get views
+        gName = findViewById(R.id.addGoal_goalName);
         gDescr = findViewById(R.id.addGoal_goalDescription);
         gSpinner = findViewById(R.id.addGoal_goalArea);
         gLevel = findViewById(R.id.addGoal_goalLevel);
@@ -48,19 +51,28 @@ public class AddGoal extends AppCompatActivity {
     public boolean addGoal(View view) {
 
         // Get values of item
-        String description = "";
-        if (gDescr.getText() != null) {
-            description = (String) gDescr.getText();
+        String name = "";
+        if (gName.getText() != null) {
+            name = gName.getText().toString();
         } else {
-            Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noDescr), Toast.LENGTH_LONG).show();
+            Toast.makeText(AddGoal.this, String.valueOf(R.string.err_addGoal_noName), Toast.LENGTH_LONG).show();
             return false;
         }
 
-        String goalLevel = (String) gLevel.getSelectedItem();
-        String goalArea = (String) gSpinner.getSelectedItem();                          // will always have a value
-        boolean recurring = gRecurring.isEnabled();                                     // will always have a value
+        String description = "";
+        if (gDescr.getText() != null) {
+            description = gDescr.getText().toString();
+        } else {
+            return false;
+        }
 
-        Goal mGoal = new Goal(description, recurring);
+        // will always have a value
+        String goalLevel = gLevel.getSelectedItem().toString();
+        // will always have a value
+        String goalArea = gSpinner.getSelectedItem().toString();
+        // will always have a value
+        boolean recurring = gRecurring.isEnabled();
+        Goal mGoal = new Goal(name, description, goalArea, goalLevel, recurring);
 
         // Add Goal to Room Table
         mCal.addGoal(mGoal);

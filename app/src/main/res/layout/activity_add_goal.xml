@@ -55,21 +55,21 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
         <!--TODO: Add Name and Description-->
         <EditText
-            android:id="@+id/addGoal_goalDescription"
+            android:id="@+id/addGoal_goalName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:text="@string/goalDescriptionTextView"
+            android:text="@string/addGoal_goalName"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="229dp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/addGoal_goalDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/goalDescriptionTextView" />
+            android:text="@string/addGoal_goalDescription" />
 
         <Spinner
             android:id="@+id/addGoal_goalLevel"
