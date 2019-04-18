@@ -9,39 +9,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.io.Serializable;
 import java.util.Date;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CalendarFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CalendarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CalendarFragment";
-    private static final String MCALKEY = "mCalData";
 
-    private OnFragmentInteractionListener mListener;
-    private Date mStartDate = new Date();
-    private Date mEndDate = new Date();
+    private Date mStartDate;
+    private Date mEndDate;
     private CalendarDataModel mCalModel;
 
     // Layout items
     ImageButton nextDay;
     ImageButton prevDay;
 
+    RelativeLayout dayOne;
+    RelativeLayout dayTwo;
+    RelativeLayout dayThree;
+
     public CalendarFragment() {
         // Required empty public constructor
     }
     
     public static CalendarFragment newInstance() {
-        // TODO: Add params for storing current day
         CalendarFragment fragment = new CalendarFragment();
         return fragment;
     }
@@ -50,12 +45,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // TODO: Load calendar from current day
         // Using calendar model
         mCalModel = new CalendarDataModel(this.getActivity());
-        // TODO: 4/12/2019 Get model from instance
+        Log.d(TAG, "onCreate: " + mCalModel.getCalendars());
 
-        // TODO: 4/13/2019 Create view based and date range 
+        // TODO: 4/13/2019 Create view based and date range /Later
     }
 
     @Override
@@ -63,10 +57,23 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        
+        // Load calendar from current day
+        Bundle args = this.getArguments();
+        if (args != null){
+            mStartDate = (Date) args.getSerializable("startDate");
+            mEndDate = (Date) args.getSerializable("endDate");
+        } else {
+            mStartDate = new Date();
+            mEndDate = new Date();
+        }
+
         //TODO Load events from calendar model
         nextDay = mView.findViewById(R.id.nextDay);
         prevDay = mView.findViewById(R.id.prevDay);
+
+        dayOne = mView.findViewById(R.id.left_event_column_day_one);
+        dayTwo = mView.findViewById(R.id.left_event_column_day_two);
+        dayThree = mView.findViewById(R.id.left_event_column_day_three);
 
         nextDay.setOnClickListener(this);
         prevDay.setOnClickListener(this);
@@ -75,33 +82,15 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            // TODO: 4/12/2019 What went here?
-            return;
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        // TODO: 3/13/2019 Requires listener if passing information between
-        // TODO: 3/20/2019 pass currently selected day(s) 
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         //TODO: save start and end days.
         super.onDetach();
-        mListener = null;
 
     }
 
@@ -117,20 +106,5 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "onClick: Prev Day Clicked");
                 break;
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

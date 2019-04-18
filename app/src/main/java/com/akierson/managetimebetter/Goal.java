@@ -22,7 +22,15 @@ public class Goal {
     @ColumnInfo(name = "attached_event")
     public int attached_event_id;
 
-    public Goal(String name, String description, String area, String level, boolean recursion, int eventid = null) {
+    public Goal(String name, String description, String area, String level, boolean recursion) {
+        this.name = name;
+        this.description = description;
+        this.area = area;
+        this.level = level;
+        this.recursion = recursion;
+    }
+
+    public Goal(String name, String description, String area, String level, boolean recursion, int eventid) {
         this.name = name;
         this.description = description;
         this.area = area;

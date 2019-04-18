@@ -30,7 +30,7 @@ import java.util.Set;
 
 
 // Loads Calendars from phone and stores usage events from recent times
-public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements DashboardFragment.OnFragmentInteractionListener {
 
 
     // Constants for intents, tags and permission numeration
@@ -58,12 +58,9 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     // Data Instances
     private Calendar startDateCal = Calendar.getInstance();
     private Calendar endDateCal = Calendar.getInstance();
-    // TODO: 4/13/2019 ??
-    private int eventIndex;
 
     // Public in order to be accessed from frags
-    //TODO: Add DashboardModel, GoalModel at start for easier access
-    RoomDatabase.Builder<GoalAppDatabase> gdb;
+    GoalAppDatabase gdb;
 
     // Fragments
     CalendarFragment calFrag;
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
             Bundle bundle = new Bundle();
             // Variables to pass
             bundle.putSerializable(START_DATE, startDateCal.getTime());
-            bundle.putSerializable(END_DATE,endDateCal.getTime());
+            bundle.putSerializable(END_DATE, endDateCal.getTime());
             //instantiate fragments
             calFrag = new CalendarFragment();
             calFrag.setArguments(bundle);
@@ -246,12 +243,11 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
         }
     }
 
-    // TODO: Pass goals db to each new activitity
     // Fab Event
     public void onFabEventPress (View fab) {
         Intent intent = new Intent(this, AddEvent.class);
-        // TODO: 4/11/2019 pass goals database
-//        intent.putExtra("goalDB", (Parcelable) gdb);
+        intent.putExtra(START_DATE, startDateCal);
+        intent.putExtra(END_DATE, endDateCal);
         onFabPress(fab);
         startActivity(intent);
     }
@@ -259,8 +255,8 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     // Fab Goal
     public void onFabGoalPress (View fab) {
         Intent intent = new Intent(this, AddGoal.class);
-        // TODO: 4/11/2019 pass goals database
-//        intent.putExtra("goalDB", (Parcelable) gdb);
+        intent.putExtra(START_DATE, startDateCal);
+        intent.putExtra(END_DATE, endDateCal);
         onFabPress(fab);
         startActivity(intent);
     }
