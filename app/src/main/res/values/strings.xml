@@ -61,6 +61,7 @@
     <string name="addEvent_error">Please fill out all fields!</string>
     <string name="addEvent_eventAdded">Event successfully added!</string>
     <string name="addGoal_goalDescription">Description</string>
+    <string name="addEvent_error_noCals">No calendars in phone</string>
     <!-- TODO: add from Table -->
     <string-array name="goalAreas">
         <item>Financial</item>

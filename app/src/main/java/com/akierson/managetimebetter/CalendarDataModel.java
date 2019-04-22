@@ -4,22 +4,18 @@ import android.Manifest;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.icu.util.Calendar;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +24,7 @@ public class CalendarDataModel {
     public static final String TAG = "CalendarDataModel";
 
     // store Calendar Names
-    Set<String> mCals;
+    ArrayList<String> mCals;
 
     // store goals
     final GoalAppDatabase gdb;
@@ -54,14 +50,19 @@ public class CalendarDataModel {
     public static final Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
 
     ContentResolver contentResolver;
-    Set<String> calendars = new HashSet<String>();
+    ArrayList<String> calendars;
 
+    // TODO: 4/18/2019 Localize formattting and change to calendar dates 
     String startDay;
     String endDay;
 
 
     public CalendarDataModel(Context ctx) {
+        startDay = Calendar.getInstance().getTime().toString();
+        endDay = Calendar.getInstance().getTime().toString();
+        // Get Content getter
         contentResolver = ctx.getContentResolver();
+        // Get AppDatabase
         gdb = new GoalAppDatabase() {
             @NonNull
             @Override
@@ -85,6 +86,7 @@ public class CalendarDataModel {
                 return null;
             }
         };
+        // Check for permissions
         if (ContextCompat.checkSelfPermission(
                 ctx.getApplicationContext(), Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                 ctx.getApplicationContext(), Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
@@ -95,7 +97,7 @@ public class CalendarDataModel {
         }
     }
 
-    public Set<String> getCalendars() {
+    public ArrayList<String> getCalendars() {
         // Fetch a list of all calendars sync'd with the device and their display names
         Cursor cursor = contentResolver.query(CALENDAR_URI, FIELDS, null, null, null);
 
@@ -113,31 +115,32 @@ public class CalendarDataModel {
         } catch (AssertionError ex) {
             Log.e(TAG, "getCalendars: ", ex );
         }
-
+        cursor.close();
         Log.d(TAG, "getCalendars: " + calendars);
         return calendars;
     }
 
-    public Set<String> getCalendarEvents() {
+    public ArrayList<String> getCalendarEvents() {
         // Fetch a list of all events and associated calendars
-        Cursor cursor = contentResolver.query(ContentUris., EVENTFIELDS, null, null, null);
-
-        try {
-            if (cursor.getCount() > 0) {
-                while (cursor.moveToNext()) {
-                    String name = cursor.getString(0);
-                    String displayName = cursor.getString(1);
-                    // This is actually a better pattern:
-                    String color = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR));
-                    Boolean selected = !cursor.getString(3).equals("0");
-                    calendars.add(displayName);
-                }
-            }
-        } catch (AssertionError ex) {
-            Log.e(TAG, "getCalendars: ", ex );
-        }
-
-        Log.d(TAG, "getCalendars: " + calendars);
+//        Cursor cursor = contentResolver.query(CALENDAR_URI, EVENTFIELDS, null, null, null);
+//
+//        try {
+//            if (cursor.getCount() > 0) {
+//                while (cursor.moveToNext()) {
+//                    String name = cursor.getString(0);
+//                    String displayName = cursor.getString(1);
+//                    // This is actually a better pattern:
+//                    String color = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR));
+//                    Boolean selected = !cursor.getString(3).equals("0");
+//                    calendars.add(displayName);
+//                }
+//            }
+//        } catch (AssertionError ex) {
+//            Log.e(TAG, "getCalendars: ", ex );
+//        }
+//
+//        cursor.close();
+//        Log.d(TAG, "getCalendars: " + calendars);
         return calendars;
     }
 
@@ -153,6 +156,9 @@ public class CalendarDataModel {
     public void setStartDay(String startDay) {
         this.startDay = startDay;
     }
+    public void setStartDay(Calendar startDay) {
+        this.startDay = startDay.toString();
+    }
 
     public String getEndDay() {
         return endDay;
@@ -160,5 +166,8 @@ public class CalendarDataModel {
 
     public void setEndDay(String endDay) {
         this.endDay = endDay;
+    }
+    public void setEndDay(Calendar endDay) {
+        this.endDay = endDay.toString();
     }
 }

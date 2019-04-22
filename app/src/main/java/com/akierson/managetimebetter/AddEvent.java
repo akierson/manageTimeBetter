@@ -14,6 +14,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -25,7 +26,9 @@ import android.widget.Toast;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class AddEvent extends Activity {
@@ -36,6 +39,8 @@ public class AddEvent extends Activity {
     Calendar startDate;
     Calendar endDate;
     SimpleDateFormat dateParse;
+
+    CalendarDataModel mCal;
 
     private DatePickerDialog.OnDateSetListener startDateChange;
     private DatePickerDialog.OnDateSetListener endDateChange;
@@ -63,6 +68,9 @@ public class AddEvent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        // Load Data
+        mCal = new CalendarDataModel(this);
+
 
         // Get localized date format from phone
         Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
@@ -87,67 +95,16 @@ public class AddEvent extends Activity {
         userCalendar = findViewById(R.id.addEvent_userCalendar);
 
         // Populate fields
-        // TODO: have user pick Calendar ID
-        // TODO: 4/16/2019 Fix so it doesn't crash
-//        String userCals =  CalendarContract.Calendars.ACCOUNT_NAME;
-//        SpinnerAdapter adapter = new SpinnerAdapter() {
-//            @Override
-//            public void registerDataSetObserver(DataSetObserver observer) {
-//
-//            }
-//
-//            @Override
-//            public void unregisterDataSetObserver(DataSetObserver observer) {
-//
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return null;
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean hasStableIds() {
-//                return false;
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                return null;
-//            }
-//
-//            @Override
-//            public int getItemViewType(int position) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public int getViewTypeCount() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean isEmpty() {
-//                return false;
-//            }
-//
-//            @Override
-//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-//                return null;
-//            }
-//        };
-//        View dropDownView = (View) adapter.getDropDownView(R.layout.support_simple_spinner_dropdown_item, userCalendar, (ViewGroup) findViewById(R.id.addEvent_linearLayout));
-//        userCalendar.setAdapter(adapter);
+        ArrayList<String> userCals =  mCal.getCalendars();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userCals);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Check if there are calendars on phone
+        if (userCals != null) {
+            userCalendar.setAdapter(arrayAdapter);
+        } else {
+            userCalendar.setVisibility(View.GONE);
+            Log.d(TAG, "onCreate: " + getString(R.string.addEvent_error_noCals));
+        }
         startDateTv.setText(dateParse.format(startDate.getTime()));
         endDateTv.setText(dateParse.format(startDate.getTime()));
 
@@ -242,8 +199,6 @@ public class AddEvent extends Activity {
 
         // return to previous screen
         Toast.makeText(getApplicationContext(), getString(R.string.addEvent_eventAdded), Toast.LENGTH_LONG).show();
-
-        // TODO: 4/11/2019 add Event to attached goal area
 
         finish();
     }
