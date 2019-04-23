@@ -1,8 +1,12 @@
 package com.akierson.managetimebetter;
 
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -20,6 +24,7 @@ import android.widget.Toast;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class AddGoal extends AppCompatActivity {
 
@@ -55,12 +60,15 @@ public class AddGoal extends AppCompatActivity {
 
         // Instantiate data models
         mCal = new CalendarDataModel(this);
-        gReminderDay.setText(mCal.getStartDay());
+
         // Get localized date format from phone
         Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
         String pattern = ((SimpleDateFormat)dateFormat).toLocalizedPattern();
         dateParse = new SimpleDateFormat(pattern);
+
         reminderDate = Calendar.getInstance();
+        gReminderDay.setText(dateParse.format(reminderDate.getTime()));
+
         onDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -111,19 +119,42 @@ public class AddGoal extends AppCompatActivity {
 
         // Add Goal to Room Table
         mCal.addGoal(mGoal);
-        // TODO: add reminder event
+
+        if (gReminder.isChecked()) {
+            // Add reminder event
+            ContentResolver cr = getContentResolver();
+            ContentValues values = new ContentValues();
+            TimeZone timeZone = TimeZone.getDefault();
+            values.put(CalendarContract.Events.DTSTART, reminderDate.getTimeInMillis());
+            values.put(CalendarContract.Events.DTEND, reminderDate.getTimeInMillis());
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
+            values.put(CalendarContract.Events.TITLE, name);
+            values.put(CalendarContract.Events.DESCRIPTION, String.valueOf(R.string.addGoal_addGoalDescr));
+            values.put(CalendarContract.Events.ALL_DAY, Boolean.TRUE);
+            // TODO: Have each area assigned to a calendar etc.
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            String eventID = uri.getLastPathSegment();
+            Log.d(TAG, "addEvent: Event " + eventID + " added");
+        }
+
+        Toast.makeText(getApplicationContext(), getString(R.string.addGoal_goalAdded), Toast.LENGTH_LONG).show();
+
         finish();
         return true;
     }
 
     public void addReminder(boolean isChecked) {
         if (isChecked) {
-            int year = Calendar.YEAR;
-            int month = Calendar.MONTH;
-            int day = Calendar.DAY_OF_MONTH;
+            int year = reminderDate.get(Calendar.YEAR);
+            int month = reminderDate.get(Calendar.MONTH);
+            int day = reminderDate.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(this, onDateChange, year, month, day);
             dialog.show();
         }
+    }
+
+    public void cancel(View view) {
+        finish();
     }
 }

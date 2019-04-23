@@ -1,5 +1,6 @@
 package com.akierson.managetimebetter;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
@@ -9,14 +10,18 @@ public class Event {
     String description;
     boolean allDay;
     String calendar;
-    Date begin;
-    Date end;
+    Calendar begin;
+    Calendar end;
 
-    public Event(int _id, String title, String description, boolean allDay, String calendar, Date begin, Date end) {
+    public Event(int _id, String title, String description, int allDay, String calendar, Calendar begin, Calendar end) {
         this._id = _id;
         this.title = title;
         this.description = description;
-        this.allDay = allDay;
+        if (allDay == 0){
+            this.allDay = true;
+        } else {
+            this.allDay = false;
+        }
         this.calendar = calendar;
         this.begin = begin;
         this.end = end;
@@ -62,19 +67,19 @@ public class Event {
         this.calendar = calendar;
     }
 
-    public Date getBegin() {
+    public Calendar getBegin() {
         return begin;
     }
 
-    public void setBegin(Date begin) {
+    public void setBegin(Calendar begin) {
         this.begin = begin;
     }
 
-    public Date getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(Calendar end) {
         this.end = end;
     }
 }

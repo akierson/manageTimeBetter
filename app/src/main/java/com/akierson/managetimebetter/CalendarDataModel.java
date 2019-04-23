@@ -1,6 +1,7 @@
 package com.akierson.managetimebetter;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
@@ -69,20 +70,23 @@ public class CalendarDataModel {
     ContentResolver contentResolver;
     ArrayList<String> calendars;
 
-    // TODO: 4/18/2019 Localize formattting and change to calendar dates 
     Calendar startDay;
     Calendar endDay;
     private ArrayList<Event> calEvents;
+    private String title;
+    private int eventID;
     private String descrVal;
-    private long allDayVal;
+    private int allDayVal;
     private long colorVal;
     private String calendarVal;
+    private long beginVal;
     private long endVal;
 
 
     public CalendarDataModel(Context ctx) {
 
         calendars = new ArrayList<String>();
+        calEvents = new ArrayList<Event>();
         startDay = Calendar.getInstance();
         endDay = Calendar.getInstance();
         // Get Content getter
@@ -133,7 +137,6 @@ public class CalendarDataModel {
                     // This is actually a better pattern:
                     String color = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR));
                     Boolean selected = !cursor.getString(3).equals("0");
-                    Log.d(TAG, "getCalendars: Adding Calendar " + displayName);
                     // TODO: 4/22/2019 Check if calendar already exists 
                     calendars.add(displayName);
                 }
@@ -146,16 +149,13 @@ public class CalendarDataModel {
         return calendars;
     }
 
+    @SuppressLint("NewApi")
     public ArrayList<Event> getCalendarEvents() {
         // Specify the date range you want to search for recurring
         // event instances
-        // TODO: 4/22/2019 Set start time 
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2011, 9, 23, 8, 0);
-        long startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2011, 10, 24, 8, 0);
-        long endMillis = endTime.getTimeInMillis();
+        // TODO: 4/22/2019 Set start time
+        long startMillis = startDay.getTimeInMillis();
+        long endMillis = endDay.getTimeInMillis();
 
         Cursor cur = null;
 
@@ -170,35 +170,36 @@ public class CalendarDataModel {
         ContentUris.appendId(builder, endMillis);
 
         // Submit the query
-        cur =  contentResolver.query(builder.build(),
-        INSTANCE_FIELDS,
-        selection,
-        selectionArgs,
-                null);
+        cur = (Cursor) contentResolver.query(builder.build(),
+        INSTANCE_FIELDS, null, null);
 
-        while (cur.moveToNext()) { 
-            String title = null;
-            long eventID = 0;
-            long beginVal = 0;
-
+        while (cur.moveToNext()) {
             // Get the field values
 
-            eventID = cur.getLong(INSTANCE_ID);
+            eventID = cur.getInt(INSTANCE_ID);
             
             title = cur.getString(INSTANCE_TITLE);
             descrVal = cur.getString(INSTANCE_DESCRIPTION);
-            allDayVal = cur.getLong(INSTANCE_ALL_DAY);
+            allDayVal = cur.getInt(INSTANCE_ALL_DAY);
             colorVal = cur.getLong(INSTANCE_COLOR);
             calendarVal = cur.getString(INSTANCE_DISPLAY_NAME);
             beginVal = cur.getLong(INSTANCE_BEGIN);
             endVal = cur.getLong(INSTANCE_END);
 
+            Calendar eventStart = Calendar.getInstance();
+            eventStart.setTimeInMillis(beginVal);
+
+            Calendar eventEnd = Calendar.getInstance();
+            eventEnd.setTimeInMillis(endVal);
+
             // Do something with the values.
             Log.i(TAG, "Event:  " + title);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(beginVal);
             DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            Log.i(TAG, "Date: " + formatter.format(calendar.getTime()));
+            Log.i(TAG, "Date: " + formatter.format(eventStart.getTime()));
+
+            Event mEvent = new Event(eventID, title, descrVal, allDayVal, calendarVal, eventStart, eventEnd);
+            // TODO: 4/23/2019 Don't dupe events
+            calEvents.add(mEvent);
         }
         
         return calEvents;

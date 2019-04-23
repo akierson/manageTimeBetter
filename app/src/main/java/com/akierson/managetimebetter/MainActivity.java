@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
     private Calendar startDateCal = Calendar.getInstance();
     private Calendar endDateCal = Calendar.getInstance();
 
-    // Public in order to be accessed from frags
-    GoalAppDatabase gdb;
-
     // Fragments
     CalendarFragment calFrag;
     DashboardFragment dashFrag;
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
         showReadCalendarPermission();
         showWriteCalendarPermission();
 
-
         // TODO: 4/13/2019 add on permission change to reload activity
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
@@ -107,14 +103,15 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
             // Initialise Fragments
             Bundle bundle = new Bundle();
             // Variables to pass
-            bundle.putSerializable(START_DATE, startDateCal.getTime());
-            bundle.putSerializable(END_DATE, endDateCal.getTime());
-            //instantiate fragments
+            bundle.putSerializable(START_DATE, startDateCal);
+            bundle.putSerializable(END_DATE, endDateCal);
+            //Instantiate fragments
             calFrag = new CalendarFragment();
-            calFrag.setArguments(bundle);
             dashFrag = new DashboardFragment();
-            dashFrag.setArguments(bundle);
             goalFrag = new GoalsFragment();
+            // Put args
+            calFrag.setArguments(bundle);
+            dashFrag.setArguments(bundle);
             goalFrag.setArguments(bundle);
 
             // Add Calendar Fragment to home screen
@@ -266,6 +263,10 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            // Have check to stop app from crashing if permissions not granted
+            showReadCalendarPermission();
+            showWriteCalendarPermission();
+
             switch (item.getItemId()) {
                 case R.id.navigation_calendar:
                     // Remove Other Fragments first

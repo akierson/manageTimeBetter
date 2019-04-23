@@ -9,7 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/primaryColor"
         android:elevation="8dp"
         android:minHeight="8dp">
         <LinearLayout
@@ -44,7 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_right_black_24dp" />
+                android:src="@drawable/baseline_arrow_right_black_24dp"
+                android:contentDescription="" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
     <ScrollView
@@ -69,14 +70,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="20dp"
                         android:text="@string/time_0"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="60dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,14 +85,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="80dp"
                         android:text="@string/time_1"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="120dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -99,14 +100,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="140dp"
                         android:text="@string/time_2"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="180dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -114,14 +115,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="200dp"
                         android:text="@string/time_3"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="240dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -129,14 +130,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="260dp"
                         android:text="@string/time_4"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="300dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -144,14 +145,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="320dp"
                         android:text="@string/time_5"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="360dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,14 +160,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="380dp"
                         android:text="@string/time_6"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="420dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -174,14 +175,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="440dp"
                         android:text="@string/time_7"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="480dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,14 +190,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="500dp"
                         android:text="@string/time_8"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="540dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,14 +205,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="560dp"
                         android:text="@string/time_9"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="600dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -219,14 +220,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="620dp"
                         android:text="@string/time_10"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="660dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -234,14 +235,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="680dp"
                         android:text="@string/time_11"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="720dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -249,14 +250,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="740dp"
                         android:text="@string/time_12"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="780dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -264,14 +265,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="800dp"
                         android:text="@string/time_13"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="840dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -279,14 +280,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="860dp"
                         android:text="@string/time_14"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="900dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -294,14 +295,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="920dp"
                         android:text="@string/time_15"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="960dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -309,14 +310,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="980dp"
                         android:text="@string/time_16"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1020dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -324,14 +325,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1040dp"
                         android:text="@string/time_17"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1080dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -339,14 +340,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1100dp"
                         android:text="@string/time_18"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1140dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -354,14 +355,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1160dp"
                         android:text="@string/time_19"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1200dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -369,14 +370,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1220dp"
                         android:text="@string/time_20"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1260dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -384,14 +385,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1280dp"
                         android:text="@string/time_21"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1320dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -399,14 +400,14 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1340dp"
                         android:text="@string/time_22"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1380dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -414,19 +415,19 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="1400dp"
                         android:text="@string/time_23"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/secondaryDarkColor"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1440dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
                 </RelativeLayout>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorDivider" />
+                    android:background="@color/secondaryLightColor" />
                 <RelativeLayout
                     android:id="@+id/left_event_column_day_one"
                     android:layout_width="0dp"
@@ -437,156 +438,156 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="60dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="120dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="180dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="240dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="300dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="360dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="420dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="480dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="540dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="600dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="660dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="720dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="780dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="840dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="900dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="960dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1020dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1080dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1140dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1200dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1260dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1320dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1380dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1440dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1500dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
                 </RelativeLayout>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorDivider" />
+                    android:background="@color/secondaryLightColor" />
                 <RelativeLayout
                     android:id="@+id/left_event_column_day_two"
                     android:layout_width="0dp"
@@ -597,156 +598,156 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="60dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="120dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="180dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="240dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="300dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="360dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="420dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="480dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="540dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="600dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="660dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="720dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="780dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="840dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="900dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="960dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1020dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1080dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1140dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1200dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1260dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1320dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1380dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1440dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1500dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
                 </RelativeLayout>
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorDivider" />
+                    android:background="@color/secondaryLightColor" />
                 <RelativeLayout
                     android:id="@+id/left_event_column_day_three"
                     android:layout_width="0dp"
@@ -757,151 +758,151 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="60dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="120dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="180dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="240dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="300dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="360dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="420dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="480dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="540dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="600dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="660dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="720dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="780dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="840dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="900dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="960dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1020dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1080dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1140dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1200dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1260dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1320dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1380dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1440dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
 
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="1500dp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/secondaryLightColor" />
                 </RelativeLayout>
             </LinearLayout>
 

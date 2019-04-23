@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,8 +23,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CalendarFragment";
 
-    private Date mStartDate;
-    private Date mEndDate;
+    private Calendar mStartDate;
+    private Calendar mEndDate;
     private CalendarDataModel mCalModel;
 
     // Layout items
@@ -62,12 +63,15 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         // Load Start Day and End Dat from previous instance
         Bundle args = this.getArguments();
         if (args != null){
-            mStartDate = (Date) args.getSerializable("startDate");
-            mEndDate = (Date) args.getSerializable("endDate");
+            mStartDate = (Calendar) args.getSerializable("startDate");
+            mEndDate = (Calendar) args.getSerializable("endDate");
         } else {
-            mStartDate = new Date();
-            mEndDate = new Date();
+            mStartDate = Calendar.getInstance();
+            mEndDate = Calendar.getInstance();
         }
+        // Set Calendar Date model
+        mCalModel.setStartDay(mStartDate);
+        mCalModel.setEndDay(mEndDate);
 
         nextDay = mView.findViewById(R.id.nextDay);
         prevDay = mView.findViewById(R.id.prevDay);
@@ -89,8 +93,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private void loadEvents() {
         ArrayList<Event> events = mCalModel.getCalendarEvents();
-        for (int i = 0; i < events.size(); i++) {
 
+        for (int i = 0; i < events.size(); i++) {
+            Log.d(TAG, "loadEvents: " + events.get(i).getTitle());
         }
     }
 
