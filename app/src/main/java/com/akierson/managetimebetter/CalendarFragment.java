@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class CalendarFragment extends Fragment implements View.OnClickListener {
@@ -44,10 +46,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Using calendar model
-        mCalModel = new CalendarDataModel(this.getActivity());
-        Log.d(TAG, "onCreate: " + mCalModel.getCalendars());
 
         // TODO: 4/13/2019 Create view based and date range /Later
     }
@@ -57,7 +55,11 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_calendar, container, false);
-        // Load calendar from current day
+
+        // Using calendar model
+        mCalModel = new CalendarDataModel(this.getActivity());
+
+        // Load Start Day and End Dat from previous instance
         Bundle args = this.getArguments();
         if (args != null){
             mStartDate = (Date) args.getSerializable("startDate");
@@ -67,7 +69,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             mEndDate = new Date();
         }
 
-        //TODO Load events from calendar model
         nextDay = mView.findViewById(R.id.nextDay);
         prevDay = mView.findViewById(R.id.prevDay);
 
@@ -78,8 +79,19 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         nextDay.setOnClickListener(this);
         prevDay.setOnClickListener(this);
 
+        //TODO Load events from calendar model
+
+        loadEvents();
+
         return mView;
 
+    }
+
+    private void loadEvents() {
+        ArrayList<Event> events = mCalModel.getCalendarEvents();
+        for (int i = 0; i < events.size(); i++) {
+
+        }
     }
 
     @Override
@@ -91,7 +103,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     public void onDetach() {
         //TODO: save start and end days.
         super.onDetach();
-
     }
 
     @Override

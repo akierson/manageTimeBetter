@@ -112,7 +112,6 @@ public class AddGoal extends AppCompatActivity {
         // Add Goal to Room Table
         mCal.addGoal(mGoal);
         // TODO: add reminder event
-        // TODO: 4/12/2019 send to add event for activity for result 
         finish();
         return true;
     }

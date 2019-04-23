@@ -18,11 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="18dp">
+            android:gravity="center">
 
-            <TextView
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -30,7 +29,8 @@
                 android:text="@string/addGoalCancel"
                 android:textAlignment="center" />
 
-            <TextView
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,17 +59,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:text="@string/addGoal_goalName"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="229dp" />
+            android:hint="@string/addGoal_goalName"
+            android:inputType=""
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/addGoal_goalDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/addGoal_goalDescription" />
+            android:hint="@string/addGoal_goalDescription"
+            android:importantForAutofill="no" />
 
         <Spinner
             android:id="@+id/addGoal_goalLevel"
@@ -86,7 +86,7 @@
                 android:id="@+id/addGoal_goalArea"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:layout_weight="1"
                 android:entries="@array/goalAreas"
                 android:spinnerMode="dialog"
@@ -100,7 +100,7 @@
                 android:id="@+id/addGoal_addArea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:text="@string/addGoal_addGoalArea"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -110,33 +110,21 @@
 
         <Switch
             android:id="@+id/addGoal_goalRecur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/addGoal_recurring"
-            tools:layout_editor_absoluteX="148dp"
-            tools:layout_editor_absoluteY="340dp" />
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="fill"
-            android:orientation="horizontal">
+            android:text="@string/addGoal_recurring" />
 
-            <Switch
-                android:id="@+id/addGoal_addReminder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Reminder"
-                tools:layout_editor_absoluteX="136dp"
-                tools:layout_editor_absoluteY="387dp" />
+        <Switch
+            android:id="@+id/addGoal_addReminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Reminder" />
 
-            <TextView
-                android:id="@+id/addGoal_reminderDay"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Now" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/addGoal_reminderDay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Now" />
 
     </LinearLayout>
 

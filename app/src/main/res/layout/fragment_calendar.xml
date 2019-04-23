@@ -12,9 +12,6 @@
         android:background="@color/colorPrimary"
         android:elevation="8dp"
         android:minHeight="8dp">
-
-        <!-- TODO: add 5 more columns -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+        <!--TODO: Add dates at top and animations for them-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
