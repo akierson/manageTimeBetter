@@ -83,7 +83,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         nextDay.setOnClickListener(this);
         prevDay.setOnClickListener(this);
 
-        //TODO Load events from calendar model
 
         loadEvents();
 
@@ -92,10 +91,13 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadEvents() {
+        //Load events from calendar model
         ArrayList<Event> events = mCalModel.getCalendarEvents();
 
         for (int i = 0; i < events.size(); i++) {
-            Log.d(TAG, "loadEvents: " + events.get(i).getTitle());
+            Log.d(TAG, "loadEvents: " + events.get(i).getTitle() + " Time: " + events.get(i).getBegin() + " - " + events.get(i).getEnd());
+            // TODO: 4/23/2019 Load event into calendar
+
         }
     }
 
@@ -112,14 +114,32 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Calendar newDay;
         switch (v.getId()) {
             case R.id.nextDay:
-                // TODO: 4/3/2019 Go to next day
                 Log.d(TAG, "onClick: Next Day Clicked");
+                //Set Start Day
+                newDay = mCalModel.getStartDay();
+                newDay.add(Calendar.DATE, 1);
+                mCalModel.setStartDay(newDay);
+
+                // Set End Day
+                newDay = mCalModel.getEndDay();
+                newDay.add(Calendar.DATE, 1);
+                mCalModel.setStartDay(newDay);
+                // TODO: 4/23/2019 Reload mCal and events
                 break;
             case R.id.prevDay:
-                // TODO: 4/3/2019 Go to prev day
                 Log.d(TAG, "onClick: Prev Day Clicked");
+                //Set Start Day
+                newDay = mCalModel.getStartDay();
+                newDay.add(Calendar.DATE, -1);
+                mCalModel.setStartDay(newDay);
+
+                // Set End Day
+                newDay = mCalModel.getEndDay();
+                newDay.add(Calendar.DATE, -1);
+                mCalModel.setStartDay(newDay);
                 break;
         }
     }
