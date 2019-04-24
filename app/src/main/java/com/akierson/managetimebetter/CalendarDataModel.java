@@ -25,9 +25,6 @@ import java.util.Calendar;
 public class CalendarDataModel {
     public static final String TAG = "CalendarDataModel";
 
-    // store Calendar Names
-    ArrayList<String> mCals;
-
     // store goals
     final GoalAppDatabase gdb;
 
@@ -133,12 +130,18 @@ public class CalendarDataModel {
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     String name = cursor.getString(CALENDAR_NAME);
-                    String displayName = cursor.getString(1);
+                    String displayName = cursor.getString(CALENDAR_DISPLAY_NAME);
                     // This is actually a better pattern:
                     String color = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR));
                     Boolean selected = !cursor.getString(3).equals("0");
-                    // TODO: 4/22/2019 Check if calendar already exists 
-                    calendars.add(displayName);
+                    Log.d(TAG, "getCalendars: " + name);
+                    Log.d(TAG, "getCalendars: " + displayName);
+                    Log.d(TAG, "getCalendars: " + color);
+                    Log.d(TAG, "getCalendars: " + selected);
+                    // TODO: 4/22/2019 Check if calendar already exists
+                    if (!calendars.contains(displayName)) {
+                        calendars.add(displayName);
+                    }
                 }
             }
         } catch (AssertionError ex) {
@@ -153,16 +156,10 @@ public class CalendarDataModel {
     public ArrayList<Event> getCalendarEvents() {
         // Specify the date range you want to search for recurring
         // event instances
-        // TODO: 4/22/2019 Set start time
         long startMillis = startDay.getTimeInMillis();
         long endMillis = endDay.getTimeInMillis();
 
         Cursor cur = null;
-
-        // The ID of the recurring event whose instances you are searching
-        // for in the Instances table
-        String selection = CalendarContract.Instances.EVENT_ID + " = ?";
-        String[] selectionArgs = new String[] {"207"};
 
         // Construct the query with the desired date range.
         Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();

@@ -191,7 +191,8 @@ public class AddEvent extends Activity {
             values.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         }
         // TODO: 4/23/2019 Change which calendar it goes to
-        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+        long userCalId = userCalendar.getSelectedItemId();
+        values.put(CalendarContract.Events.CALENDAR_ID, userCalId);
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
         // Retrieve ID for new event
