@@ -227,6 +227,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                     }
 
                 }
+        // TODO: 4/24/2019 Figure out best way to iteratively add items 
             containers.add(dayOneContainer);
             containers.add(dayOneContainer);
             containers.add(dayOneContainer);
