@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Set;
 import java.util.TimeZone;
 
+// TODO: 4/24/2019 Create Dupe class for updating events
 public class AddEvent extends Activity {
 
     private static final String TAG = "Add Event";
@@ -93,11 +94,14 @@ public class AddEvent extends Activity {
         allDay = findViewById(R.id.addEvent_allDay);
         busy = findViewById(R.id.addEvent_busy);
         userCalendar = findViewById(R.id.addEvent_userCalendar);
+        addEventButton = findViewById(R.id.addEvent_addEvent);
+        cancelButton = findViewById(R.id.addEvent_cancel);
 
         // Populate fields
         ArrayList<String> userCals =  mCal.getCalendars();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userCals);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         // Check if there are calendars on phone
         if (userCals != null) {
             userCalendar.setAdapter(arrayAdapter);
@@ -105,12 +109,12 @@ public class AddEvent extends Activity {
             userCalendar.setVisibility(View.GONE);
             Log.d(TAG, "onCreate: " + getString(R.string.addEvent_error_noCals));
         }
+
         startDateTv.setText(dateParse.format(startDate.getTime()));
         endDateTv.setText(dateParse.format(startDate.getTime()));
 
-        addEventButton = findViewById(R.id.addEvent_addEvent);
-        cancelButton = findViewById(R.id.addEvent_cancel);
 
+        // Picker dialog listeners
         startDateChange = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -162,8 +166,9 @@ public class AddEvent extends Activity {
         };
     }
 
+    // TODO: 4/11/2019 Add location validation
+
     public void addEvent(View view) {
-        // Insert Event
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
         TimeZone timeZone = TimeZone.getDefault();
@@ -190,14 +195,14 @@ public class AddEvent extends Activity {
         if (busy.isChecked()) {
             values.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         }
-        // TODO: 4/23/2019 Change which calendar it goes to
+        // TODO: 4/23/2019 Change which calendar it goes to, will work assuming calendars are assigned ids inside of phone
         long userCalId = userCalendar.getSelectedItemId();
         values.put(CalendarContract.Events.CALENDAR_ID, userCalId);
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
         // Retrieve ID for new event
         String eventID = uri.getLastPathSegment();
-        Log.d(TAG, "addEvent: Event " + eventID + " added");
+        Log.d(TAG, "addEvent: Event \"" + title + " (id: " + eventID + ") " + "\" added");
 
         // return to previous screen
         Toast.makeText(getApplicationContext(), getString(R.string.addEvent_eventAdded), Toast.LENGTH_LONG).show();
@@ -209,6 +214,7 @@ public class AddEvent extends Activity {
         finish();
     }
 
+    // Dialog listener functions
     public void setStartDate(View view) {
         int year = startDate.get(Calendar.YEAR);
         int month = startDate.get(Calendar.MONTH);
@@ -255,5 +261,4 @@ public class AddEvent extends Activity {
         dialog.show();
     }
 
-    // TODO: 4/11/2019 Add location validation
 }

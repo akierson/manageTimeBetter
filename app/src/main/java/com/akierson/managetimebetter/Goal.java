@@ -22,6 +22,10 @@ public class Goal {
     @ColumnInfo(name = "attached_event")
     public int attached_event_id;
 
+    // Date Added
+    // Date Deadline
+    // Date Completed
+
     public Goal(String name, String description, String area, String level, boolean recursion) {
         this.name = name;
         this.description = description;

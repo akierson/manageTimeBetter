@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
     boolean fabMenuOpen = false;
 
     // Data Instances
-    private Calendar startDateCal = Calendar.getInstance();
-    private Calendar endDateCal = Calendar.getInstance();
+    private Calendar startDateCal;
+    private Calendar endDateCal;
 
     // Fragments
     CalendarFragment calFrag;
@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
         hideFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_goals);
 
         // Create localized date variables
-        endDateCal.set(Calendar.DATE, Calendar.DATE + 2);
+        startDateCal = Calendar.getInstance();
+        endDateCal = Calendar.getInstance();
+        endDateCal.add(Calendar.DATE, 3);
 
         // Check for calendar permissions
         showReadCalendarPermission();

@@ -40,6 +40,7 @@ public class CalendarDataModel {
             CalendarContract.Instances._ID,
             CalendarContract.Instances.TITLE,
             CalendarContract.Instances.DESCRIPTION,
+            CalendarContract.Instances.EVENT_LOCATION,
             CalendarContract.Instances.ALL_DAY,
             CalendarContract.Instances.CALENDAR_COLOR,
             CalendarContract.Instances.CALENDAR_DISPLAY_NAME,
@@ -56,11 +57,12 @@ public class CalendarDataModel {
     private static final int INSTANCE_ID = 0;
     private static final int INSTANCE_TITLE = 1;
     private static final int INSTANCE_DESCRIPTION= 2;
-    private static final int INSTANCE_ALL_DAY= 3;
-    private static final int INSTANCE_COLOR = 4;
-    private static final int INSTANCE_DISPLAY_NAME = 5;
-    private static final int INSTANCE_BEGIN= 6;
-    private static final int INSTANCE_END = 7;
+    private static final int INSTANCE_LOCATION= 3;
+    private static final int INSTANCE_ALL_DAY= 4;
+    private static final int INSTANCE_COLOR = 5;
+    private static final int INSTANCE_DISPLAY_NAME = 6;
+    private static final int INSTANCE_BEGIN= 7;
+    private static final int INSTANCE_END = 8;
 
     public static final Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
 
@@ -73,6 +75,7 @@ public class CalendarDataModel {
     private String title;
     private int eventID;
     private String descrVal;
+    private String locVal;
     private int allDayVal;
     private long colorVal;
     private String calendarVal;
@@ -85,6 +88,7 @@ public class CalendarDataModel {
         calendars = new ArrayList<String>();
         calEvents = new ArrayList<Event>();
         startDay = Calendar.getInstance();
+        // TODO: 4/24/2019 get time in millis will return start of day
         endDay = Calendar.getInstance();
         // Get Content getter
         contentResolver = ctx.getContentResolver();
@@ -138,7 +142,7 @@ public class CalendarDataModel {
                     Log.d(TAG, "getCalendars: " + displayName);
                     Log.d(TAG, "getCalendars: " + color);
                     Log.d(TAG, "getCalendars: " + selected);
-                    // TODO: 4/22/2019 Check if calendar already exists
+                    // Check if calendar already exists
                     if (!calendars.contains(displayName)) {
                         calendars.add(displayName);
                     }
@@ -154,6 +158,9 @@ public class CalendarDataModel {
 
     @SuppressLint("NewApi")
     public ArrayList<Event> getCalendarEvents() {
+        // Reset
+        calEvents = new ArrayList<Event>();
+        Log.d(TAG, "getCalendarEvents: Getting Events" );
         // Specify the date range you want to search for recurring
         // event instances
         long startMillis = startDay.getTimeInMillis();
@@ -177,7 +184,10 @@ public class CalendarDataModel {
             
             title = cur.getString(INSTANCE_TITLE);
             descrVal = cur.getString(INSTANCE_DESCRIPTION);
+            locVal = cur.getString(INSTANCE_LOCATION);
             allDayVal = cur.getInt(INSTANCE_ALL_DAY);
+            // Not used
+            // TODO: 4/24/2019 Use Color Value 
             colorVal = cur.getLong(INSTANCE_COLOR);
             calendarVal = cur.getString(INSTANCE_DISPLAY_NAME);
             beginVal = cur.getLong(INSTANCE_BEGIN);
@@ -194,9 +204,11 @@ public class CalendarDataModel {
             DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
             Log.i(TAG, "Date: " + formatter.format(eventStart.getTime()));
 
-            Event mEvent = new Event(eventID, title, descrVal, allDayVal, calendarVal, eventStart, eventEnd);
-            // TODO: 4/23/2019 Don't dupe events
-            calEvents.add(mEvent);
+            Event mEvent = new Event(eventID, title, descrVal, locVal, allDayVal, calendarVal, eventStart, eventEnd);
+            // TODO: Check if array contains event
+            if (!calEvents.contains(mEvent)) {
+                calEvents.add(mEvent);
+            }
         }
         
         return calEvents;

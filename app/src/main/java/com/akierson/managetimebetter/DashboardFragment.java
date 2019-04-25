@@ -31,9 +31,12 @@ public class DashboardFragment extends Fragment {
         // Required empty public constructor
     }
     // TODO: 4/12/2019 Load Dashboard Graphs 
-    // TODO: 4/12/2019 Time spent on each goal area 
-    // TODO: 4/12/2019 Goals Accomplished 
-    // TODO: 4/12/2019 Time procrastinated 
+    // TODO: 4/12/2019 Time spent on each goal area
+    // By number of events and time assigned to each item
+    // TODO: 4/12/2019 Goals Accomplished
+    // Goals that have been completed before or on deadline
+    // TODO: 4/12/2019 Time procrastinated
+    // Goals past due date
 
     /**
      * Use this factory method to create a new instance of

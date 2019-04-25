@@ -8,16 +8,18 @@ public class Event {
     int _id;
     String title;
     String description;
+    String location;
     boolean allDay;
     String calendar;
     Calendar begin;
     Calendar end;
 
-    public Event(int _id, String title, String description, int allDay, String calendar, Calendar begin, Calendar end) {
+    public Event(int _id, String title, String description, String location, int allDay, String calendar, Calendar begin, Calendar end) {
         this._id = _id;
         this.title = title;
         this.description = description;
-        if (allDay == 0){
+        this.location = location;
+        if (allDay == 1){
             this.allDay = true;
         } else {
             this.allDay = false;
@@ -49,6 +51,16 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String getLocation() {
+        return location;
+    }
+
+    public Event setLocation(String location) {
+        this.location = location;
+        return this;
     }
 
     public boolean isAllDay() {
