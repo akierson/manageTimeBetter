@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -20,8 +21,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
-// TODO: 4/13/2019 make async 
 public class CalendarDataModel {
     public static final String TAG = "CalendarDataModel";
 
@@ -77,7 +78,6 @@ public class CalendarDataModel {
     private String descrVal;
     private String locVal;
     private int allDayVal;
-    private long colorVal;
     private String calendarVal;
     private long beginVal;
     private long endVal;
@@ -88,7 +88,6 @@ public class CalendarDataModel {
         calendars = new ArrayList<String>();
         calEvents = new ArrayList<Event>();
         startDay = Calendar.getInstance();
-        // TODO: 4/24/2019 get time in millis will return start of day
         endDay = Calendar.getInstance();
         // Get Content getter
         contentResolver = ctx.getContentResolver();
@@ -180,15 +179,13 @@ public class CalendarDataModel {
         while (cur.moveToNext()) {
             // Get the field values
 
-            eventID = cur.getInt(INSTANCE_ID);
+            eventID = Integer.parseInt(cur.getString(INSTANCE_ID));
             
             title = cur.getString(INSTANCE_TITLE);
             descrVal = cur.getString(INSTANCE_DESCRIPTION);
             locVal = cur.getString(INSTANCE_LOCATION);
             allDayVal = cur.getInt(INSTANCE_ALL_DAY);
             // Not used
-            // TODO: 4/24/2019 Use Color Value 
-            colorVal = cur.getLong(INSTANCE_COLOR);
             calendarVal = cur.getString(INSTANCE_DISPLAY_NAME);
             beginVal = cur.getLong(INSTANCE_BEGIN);
             endVal = cur.getLong(INSTANCE_END);
@@ -205,7 +202,6 @@ public class CalendarDataModel {
             Log.i(TAG, "Date: " + formatter.format(eventStart.getTime()));
 
             Event mEvent = new Event(eventID, title, descrVal, locVal, allDayVal, calendarVal, eventStart, eventEnd);
-            // TODO: Check if array contains event
             if (!calEvents.contains(mEvent)) {
                 calEvents.add(mEvent);
             }

@@ -1,15 +1,17 @@
 package com.akierson.managetimebetter;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class CalendarFragment extends Fragment implements View.OnClickListener {
@@ -37,7 +40,12 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     RelativeLayout dayOne;
     RelativeLayout dayTwo;
     RelativeLayout dayThree;
-    private Fragment mcContent;
+
+    TextView dayOneDisplay;
+    TextView dayTwoDisplay;
+    TextView dayThreeDisplay;
+
+    ProgressBar progressBar;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -51,8 +59,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Restore Calendar Things
-//        mcContent = getFragmentManager().getFragment(savedInstanceState, "calendarFragment");
+        // TODO: Restore Calendar Things
         // TODO: 4/13/2019 Create view based and date range /Later
     }
 
@@ -98,12 +105,17 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         dayTwo = mView.findViewById(R.id.left_event_column_day_two);
         dayThree = mView.findViewById(R.id.left_event_column_day_three);
 
+        dayOneDisplay = mView.findViewById(R.id.calendar_display_dayOne);
+        dayTwoDisplay = mView.findViewById(R.id.calendar_display_dayTwo);
+        dayThreeDisplay = mView.findViewById(R.id.calendar_display_dayThree);
+
+        progressBar = mView.findViewById(R.id.calendar_loadEvent_progressBar);
+
         nextDay.setOnClickListener(this);
         prevDay.setOnClickListener(this);
 
-        // TODO: 4/24/2019 not loading
         AsyncTaskRunner eventLoader = new AsyncTaskRunner();
-        eventLoader.execute();
+        eventLoader.execute(mCalModel.getCalendarEvents());
 
         return mView;
     }
@@ -133,7 +145,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                 mCalModel.setEndDay(newDay);
                 removeEvents();
                 eventLoader = new AsyncTaskRunner();
-                eventLoader.execute();
+                eventLoader.execute(mCalModel.getCalendarEvents());
+
                 break;
             case R.id.prevDay:
                 Log.d(TAG, "onClick: Prev Day Clicked");
@@ -148,114 +161,160 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                 mCalModel.setEndDay(newDay);
                 removeEvents();
                 eventLoader = new AsyncTaskRunner();
-                eventLoader.execute();
+                eventLoader.execute(mCalModel.getCalendarEvents());
+
                 break;
         }
+
+
         Log.d(TAG, "onClick: New dates: " + mCalModel.getStartDay().getTime().toString() + " - " + mCalModel.getEndDay().getTime().toString());
     }
 
-    private class AsyncTaskRunner extends AsyncTask<ArrayList<Event>, String, Void> {
+    private class AsyncTaskRunner extends AsyncTask<ArrayList<Event>, String, ArrayList<RelativeLayout>> {
 
-        ProgressDialog progressDialog;
-        ArrayList<RelativeLayout> containers = new ArrayList<>();
+        protected ArrayList<RelativeLayout> doInBackground(ArrayList<Event>... arrayList) {
 
-        protected Void doInBackground(ArrayList<Event>... event) {
-
+            // TODO: 4/26/2019 adjust for time zones
+            // TODO: Add on click event for viewing events
+            // TODO: 4/26/2019 Load calendars and color values 
             // Calls onProgressUpdate()
             publishProgress("Loading...");
+            // Get events from varargs
+            ArrayList<Event> events;
+            try {
+                events = arrayList[0];
+
+            } catch (Exception e) {
+                Log.e(TAG, "doInBackground: Events empty: ", e);
+                return null;
+            }
 
             //Load events from calendar model
-            Log.d(TAG, "loadEvents: " + event.getTitle() + " Retrieved");
+            Log.d(TAG, "doInBackground: " + events.size() + " Events Retrieved");
 
-            // Create Markers, as longs b/s millis
-            long dayOneStart = mCalModel.getStartDay().getTimeInMillis();
-            long dayTwoStart = dayOneStart + 86400000;
-            long dayThreeStart = dayTwoStart + 86400000;
-            long dayThreeEnd = dayThreeStart + 86400000;
+            // Create Markers, as longs b/c in millis
+            Calendar dayOneStart = mCalModel.getStartDay();
+            Calendar dayTwoStart = (Calendar) dayOneStart.clone();
+            dayTwoStart.add(Calendar.DATE, 1);
+            Calendar dayThreeStart = (Calendar) dayTwoStart.clone();
+            dayThreeStart.add(Calendar.DATE, 1);
+            Calendar dayThreeEnd = (Calendar) dayThreeStart.clone();
+            dayThreeEnd.add(Calendar.DATE, 1);
+
+            DisplayMetrics displayMetric = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetric);
+            float scrollViewHeight = (getResources().getDisplayMetrics().density * 1500);
 
             // Add Containers for events
+            ArrayList<RelativeLayout> containers = new ArrayList<>();
+
             RelativeLayout dayOneContainer = (RelativeLayout) RelativeLayout.inflate(getActivity(), R.layout.fragment_calendar_container, null);
             RelativeLayout dayTwoContainer = (RelativeLayout) RelativeLayout.inflate(getActivity(), R.layout.fragment_calendar_container, null);
             RelativeLayout dayThreeContainer = (RelativeLayout) RelativeLayout.inflate(getActivity(), R.layout.fragment_calendar_container, null);
 
-               Log.d(TAG, "loadEvents: " + newEvent.getTitle() + " Time: " + newEvent.getBegin().getTime().toString() + " - " + newEvent.getEnd().getTime().toString());
+            Log.d(TAG, "doInBackground: Start Day One: " + mCalModel.getStartDay().getTime().toString());
+            Date newDate = mCalModel.getStartDay().getTime();
+            dayOneDisplay.setText(dateParse.format(newDate));
+            newDate.setTime(newDate.getTime() + 86400000);
+            dayTwoDisplay.setText(dateParse.format(newDate));
+            newDate.setTime(newDate.getTime() + 86400000);
+            dayThreeDisplay.setText(dateParse.format(newDate));
 
+            for (int i = 0; i < events.size(); i++) {
+                Event newEvent = events.get(i);
+                Log.d(TAG, "doInBackground: " + newEvent.getTitle() + " Time: " + newEvent.getBegin().getTime().toString() + " - " + newEvent.getEnd().getTime().toString());
+
+                if (!newEvent.isAllDay()) {
                     // Create event view
-                    LayoutInflater eventInflator = LayoutInflater.from(getActivity());
-                    View eventLayout = (View) eventInflator.inflate(R.layout.fragment_calendar_event, null, true);
+                    View eventLayout = (View) LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
+                    // TODO: 4/25/2019 set color of event
 
                     // Get items in view
-                    TextView eventid = eventLayout.findViewById(R.id.event_id);
                     TextView eventName = eventLayout.findViewById(R.id.event_name);
                     TextView eventLocation = eventLayout.findViewById(R.id.event_location);
 
-                    if (!newEvent.isAllDay()) {
-
-                        // Set items text
-                        // Add try except: Holidays have no event id
-                        try {
-                            eventName.setText(newEvent.getTitle());
-                            eventLocation.setText(newEvent.getLocation());
-
-                            // Set EventLayout Params
-                            // TODO: 4/24/2019 Create optimizer for events
-                            long distFromTop = (dayOne.getHeight() * newEvent.getBegin().getTimeInMillis()) / 86400000;
-                            Log.d(TAG, "doInBackground: top Margin" + distFromTop);
-                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)eventLayout.getLayoutParams();
-                            params.setMargins(0, (int) distFromTop, 0, 0);
-                            eventLayout.setLayoutParams(params);
-
-                            int startTime = (int) newEvent.getBegin().getTimeInMillis();
-                            if (startTime > dayOneStart && startTime < dayTwoStart ){
-                                // Add Event to column 1
-                                dayOneContainer.addView(eventLayout, i);
-
-                            } else if (startTime < dayThreeStart){
-                                // Add Event to column 2
-                                dayTwoContainer.addView(eventLayout, i);
-
-                            } else if (startTime < dayThreeEnd){
-                                // Add Event to column 3
-                                dayThreeContainer.addView(eventLayout, i);
-
-                            }
-                        } catch (Exception e){
-                            Log.d(TAG, "loadEvents: No ID for " + newEvent.getTitle() + " " + e );
-                        }
-                    } else {
-                        // add Event to place under date
+                    Calendar startTime = (Calendar) newEvent.getBegin().clone();
+                    // Tag Item with _id to use for editing events later on
+                    try {
+                        eventLayout.setTag(newEvent.get_id());
+                    } catch (Exception e) {
+                        Log.e(TAG, "doInBackground: Event: " + newEvent.title + " has no Id: " + e);
                     }
 
+                    try {
+                        // Set items text
+                        eventName.setText(newEvent.getTitle());
+                        eventLocation.setText(newEvent.getLocation());
+
+                        // TODO: 4/24/2019 Create optimizer for events
+                        long height = newEvent.getEnd().getTimeInMillis() - startTime.getTimeInMillis();
+                        height = (long) ((height * scrollViewHeight)/86400000);
+                        Log.d(TAG, "doInBackground: Length of " + newEvent.getTitle() + ": " + height);
+
+                        float minuteDist =  (scrollViewHeight / 1440);
+                        float distFromTop = ((startTime.get(Calendar.HOUR_OF_DAY) * 60) + startTime.get(Calendar.MINUTE)) * minuteDist;
+                        Log.d(TAG, "doInBackground: " + distFromTop);
+
+                        if (startTime.after(dayOneStart) && startTime.before(dayTwoStart) ) {
+                            // Set Params
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
+                            params.setMargins(0, (int) distFromTop, 0, 0);
+                            eventLayout.setLayoutParams(params);
+                            // Add Event to column 1
+                            dayOneContainer.addView(eventLayout);
+
+                        } else if (startTime.before(dayThreeStart)){
+                            // Set Params
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
+                            params.setMargins(0, (int) distFromTop, 0, 0);
+                            eventLayout.setLayoutParams(params);
+                            // Add Event to column 2
+                            dayTwoContainer.addView(eventLayout);
+
+                        } else if (startTime.before(dayThreeEnd)){
+                            // Set Params
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
+                            params.setMargins(0, (int) distFromTop, 0, 0);
+                            eventLayout.setLayoutParams(params);
+                            // Add Event to column 3
+                            dayThreeContainer.addView(eventLayout);
+                        }
+
+
+                    } catch (Exception e){
+                        Log.d(TAG, "doInBackground: Error " + e );
+                    }
+                } else {
+                    // add Event to place under date
                 }
-        // TODO: 4/24/2019 Figure out best way to iteratively add items 
+
+            }
             containers.add(dayOneContainer);
-            containers.add(dayOneContainer);
-            containers.add(dayOneContainer);
+            containers.add(dayTwoContainer);
+            containers.add(dayThreeContainer);
+
             return containers;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<RelativeLayout> containers) {
-            // execution of result of Long time consuming operation
-            progressDialog.dismiss();
-
-            dayOne.addView(containers.get(0));
-            dayTwo.addView(containers.get(1));
-            dayThree.addView(containers.get(2));
-
-        }
-
-        @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getActivity(),
-                    "Adding Events",
-                    "Loading");
+            progressBar.setVisibility(View.VISIBLE);
         }
 
 
         @Override
         protected void onProgressUpdate(String... text) {
 
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<RelativeLayout> containers) {
+            // execution of result of Long time consuming operation
+            progressBar.setVisibility(View.GONE);
+
+            dayOne.addView(containers.get(0));
+            dayTwo.addView(containers.get(1));
+            dayThree.addView(containers.get(2));
 
         }
     }

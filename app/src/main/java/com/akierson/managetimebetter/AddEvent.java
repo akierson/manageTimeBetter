@@ -31,7 +31,6 @@ import java.util.Calendar;
 import java.util.Set;
 import java.util.TimeZone;
 
-// TODO: 4/24/2019 Create Dupe class for updating events
 public class AddEvent extends Activity {
 
     private static final String TAG = "Add Event";
