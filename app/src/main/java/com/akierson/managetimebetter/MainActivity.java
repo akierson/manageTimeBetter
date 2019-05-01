@@ -28,9 +28,10 @@ import android.widget.FrameLayout;
 import java.util.Calendar;
 import java.util.Set;
 
-
+// TODO: 4/28/2019 Move on close events to async/close is choppy 
+// TODO: 4/28/2019 Add launch screen of icon
 // Loads Calendars from phone and stores usage events from recent times
-public class MainActivity extends AppCompatActivity implements DashboardFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
 
     // Constants for intents, tags and permission numeration
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
         showFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_goals);
         hideFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_event);
         hideFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_goals);
-
+        // TODO: 4/28/2019 Make animation start at first position by moveing fabs after animation 
         // Create localized date variables
         startDateCal = Calendar.getInstance();
         endDateCal = Calendar.getInstance();
@@ -289,9 +290,4 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
             return false;
         }
     };
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        // TODO: 4/3/2019 display event selected 
-    }
 }

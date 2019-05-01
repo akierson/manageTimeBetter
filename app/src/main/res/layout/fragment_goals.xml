@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor">
+        android:layout_margin="5dp">
 
-        <TextView
-            android:id="@+id/goal_title"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/goalTitle"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-    </android.support.v7.widget.Toolbar>
+            android:padding="8dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleViewGoals"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="64dp">
+            <TextView
+                android:id="@+id/goalLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Goal Level" />
 
-    </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/goalDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/goalLevel"
+                android:text="Goal Description"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/goalRecursion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/goalDescription"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@id/goalLevel"
+                android:text="Goal Recursion"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

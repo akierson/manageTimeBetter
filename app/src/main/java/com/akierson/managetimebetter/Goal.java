@@ -4,11 +4,12 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Calendar;
+
 @Entity (tableName = "goal")
 public class Goal {
-    // TODO: 4/12/2019 Reasearch Room Persistance 
     @PrimaryKey (autoGenerate = true)
-    private int id;
+    private int _id;
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "level")
@@ -20,12 +21,24 @@ public class Goal {
     @ColumnInfo(name = "recursion")
     private boolean recursion;
     @ColumnInfo(name = "attached_event")
-    public int attached_event_id;
+    private int attached_event_id;
 
+    // These are set outside of constructor
+    @ColumnInfo(name = "event_completed")
+    private boolean event_completed;
     // Date Added
+    @ColumnInfo(name = "date_added")
+    private long date_added;
     // Date Deadline
-    // Date Completed
+    @ColumnInfo(name = "date_due")
+    private long date_due;
 
+    // Date Completed
+    @ColumnInfo(name = "date_completed")
+    private long date_completed;
+
+    // TODO: 4/28/2019 Add Event Recursion
+    // Constructor without Event
     public Goal(String name, String description, String area, String level, boolean recursion) {
         this.name = name;
         this.description = description;
@@ -34,6 +47,7 @@ public class Goal {
         this.recursion = recursion;
     }
 
+    // Constructor with Event
     public Goal(String name, String description, String area, String level, boolean recursion, int eventid) {
         this.name = name;
         this.description = description;
@@ -44,11 +58,11 @@ public class Goal {
     }
 
     public int getId() {
-        return id;
+        return _id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getLevel() {
@@ -97,5 +111,43 @@ public class Goal {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public boolean isEvent_completed() {
+        return event_completed;
+    }
+
+    public void setEvent_completed(boolean event_completed) {
+        this.event_completed = event_completed;
+        if (this.isEvent_completed()) {
+            this.setDate_completed(Calendar.getInstance().getTimeInMillis());
+        } else {
+            // TODO: 4/28/2019 Add Checks for 0 in date completed 
+            this.setDate_completed(0);
+        }
+    }
+
+    public long getDate_added() {
+        return date_added;
+    }
+
+    public void setDate_added(long date_added) {
+        this.date_added = date_added;
+    }
+
+    public long getDate_due() {
+        return date_due;
+    }
+
+    public void setDate_due(long date_due) {
+        this.date_due = date_due;
+    }
+
+    public long getDate_completed() {
+        return date_completed;
+    }
+
+    public void setDate_completed(long date_completed) {
+        this.date_completed = date_completed;
     }
 }

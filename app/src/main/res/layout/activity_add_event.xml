@@ -71,7 +71,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/addEvent_eventTitle"
-                android:inputType="date|textPersonName"
+                android:inputType="textCapSentences"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_allDay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +181,8 @@
                 android:id="@+id/addEvent_userCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/addEvent_location"
@@ -202,7 +203,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/addEvent_notes"
-                android:inputType="text"
+                android:inputType="textCapSentences"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_busy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

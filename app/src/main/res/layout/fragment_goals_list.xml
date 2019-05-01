@@ -1,49 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--TODO: add toolbar somehow-->
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    android:name="com.akierson.managetimebetter.GoalsFragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/goalLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Goal Level" />
-
-            <TextView
-                android:id="@+id/goalDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/goalLevel"
-                android:text="Goal Description"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/goalRecursion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/goalDescription"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="6dp"
-                android:layout_toEndOf="@id/goalLevel"
-                android:text="Goal Recursion"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:layoutManager="LinearLayoutManager"
+    tools:context=".GoalsFragment"
+    tools:listitem="@layout/fragment_goals" />

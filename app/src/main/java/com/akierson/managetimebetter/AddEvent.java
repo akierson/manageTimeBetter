@@ -28,8 +28,12 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
+
+import static android.view.View.GONE;
 
 public class AddEvent extends Activity {
 
@@ -62,6 +66,7 @@ public class AddEvent extends Activity {
 
     Button addEventButton;
     Button cancelButton;
+    HashMap<String, String> userCals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +102,17 @@ public class AddEvent extends Activity {
         cancelButton = findViewById(R.id.addEvent_cancel);
 
         // Populate fields
-        ArrayList<String> userCals =  mCal.getCalendars();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userCals);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userCals =  mCal.getCalendars();
+        List<String> userCalNames = new ArrayList<String>(userCals.keySet());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userCalNames);
 
         // Check if there are calendars on phone
+        // TODO: 4/28/2019 fix spinner displaying dropdown arrow when GONE
         if (userCals != null) {
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             userCalendar.setAdapter(arrayAdapter);
+            userCalendar.setVisibility(View.VISIBLE);
         } else {
-            userCalendar.setVisibility(View.GONE);
             Log.d(TAG, "onCreate: " + getString(R.string.addEvent_error_noCals));
         }
 
@@ -166,6 +173,7 @@ public class AddEvent extends Activity {
     }
 
     // TODO: 4/11/2019 Add location validation
+    // TODO: 4/30/2019 Hide dates on all day set
 
     public void addEvent(View view) {
         ContentResolver cr = getContentResolver();
@@ -194,8 +202,14 @@ public class AddEvent extends Activity {
         if (busy.isChecked()) {
             values.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         }
-        // TODO: 4/23/2019 Change which calendar it goes to, will work assuming calendars are assigned ids inside of phone
-        long userCalId = userCalendar.getSelectedItemId();
+
+        String userCalId = "No Calendars";
+        try {
+            userCalId = userCals.get(userCalendar.getSelectedItem().toString());
+        } catch (Exception e) {
+            Log.e(TAG, "addEvent: No calendars in phone", e);
+        }
+        Log.d(TAG, "addEvent: " + userCalId);
         values.put(CalendarContract.Events.CALENDAR_ID, userCalId);
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 

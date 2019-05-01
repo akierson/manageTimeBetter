@@ -7,6 +7,7 @@ import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -21,11 +22,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
+// TODO: 4/28/2019 Add Swipe support, Requires set up in activity, and on Frament listener
 public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "CalendarFragment";
-
     private Calendar mStartDate;
     private Calendar mEndDate;
     private CalendarDataModel mCalModel;
@@ -47,6 +47,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
     ProgressBar progressBar;
 
+    // TODO: 4/28/2019 Add Reload on scroll down, Also Requires on Fragment interaction
     public CalendarFragment() {
         // Required empty public constructor
     }
@@ -59,8 +60,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: Restore Calendar Things
-        // TODO: 4/13/2019 Create view based and date range /Later
     }
 
     @Override
@@ -174,9 +173,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
         protected ArrayList<RelativeLayout> doInBackground(ArrayList<Event>... arrayList) {
 
-            // TODO: 4/26/2019 adjust for time zones
-            // TODO: Add on click event for viewing events
-            // TODO: 4/26/2019 Load calendars and color values 
+            // TODO: 4/26/2019 Load calendars and color values
             // Calls onProgressUpdate()
             publishProgress("Loading...");
             // Get events from varargs
@@ -212,7 +209,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             RelativeLayout dayTwoContainer = (RelativeLayout) RelativeLayout.inflate(getActivity(), R.layout.fragment_calendar_container, null);
             RelativeLayout dayThreeContainer = (RelativeLayout) RelativeLayout.inflate(getActivity(), R.layout.fragment_calendar_container, null);
 
-            Log.d(TAG, "doInBackground: Start Day One: " + mCalModel.getStartDay().getTime().toString());
             Date newDate = mCalModel.getStartDay().getTime();
             dayOneDisplay.setText(dateParse.format(newDate));
             newDate.setTime(newDate.getTime() + 86400000);
@@ -222,11 +218,20 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
             for (int i = 0; i < events.size(); i++) {
                 Event newEvent = events.get(i);
-                Log.d(TAG, "doInBackground: " + newEvent.getTitle() + " Time: " + newEvent.getBegin().getTime().toString() + " - " + newEvent.getEnd().getTime().toString());
+                Log.d(TAG, "doInBackground: " + newEvent.getTitle() + ": " + newEvent.getBegin().getTime().toString() + " - " + newEvent.getEnd().getTime().toString());
 
                 if (!newEvent.isAllDay()) {
                     // Create event view
                     View eventLayout = (View) LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
+                    // TODO: Add on click event for viewing events
+                    eventLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+
+                    ;
                     // TODO: 4/25/2019 set color of event
 
                     // Get items in view
@@ -249,11 +254,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                         // TODO: 4/24/2019 Create optimizer for events
                         long height = newEvent.getEnd().getTimeInMillis() - startTime.getTimeInMillis();
                         height = (long) ((height * scrollViewHeight)/86400000);
-                        Log.d(TAG, "doInBackground: Length of " + newEvent.getTitle() + ": " + height);
 
                         float minuteDist =  (scrollViewHeight / 1440);
                         float distFromTop = ((startTime.get(Calendar.HOUR_OF_DAY) * 60) + startTime.get(Calendar.MINUTE)) * minuteDist;
-                        Log.d(TAG, "doInBackground: " + distFromTop);
 
                         if (startTime.after(dayOneStart) && startTime.before(dayTwoStart) ) {
                             // Set Params
@@ -282,7 +285,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
 
                     } catch (Exception e){
-                        Log.d(TAG, "doInBackground: Error " + e );
+                        Log.e(TAG, "doInBackground: Error ", e );
                     }
                 } else {
                     // add Event to place under date

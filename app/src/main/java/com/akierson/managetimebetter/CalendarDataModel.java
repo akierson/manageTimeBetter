@@ -2,9 +2,6 @@ package com.akierson.managetimebetter;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.DatabaseConfiguration;
-import android.arch.persistence.room.InvalidationTracker;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -15,13 +12,14 @@ import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.HashMap;
+import java.util.List;
 
 public class CalendarDataModel {
     public static final String TAG = "CalendarDataModel";
@@ -68,7 +66,7 @@ public class CalendarDataModel {
     public static final Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
 
     ContentResolver contentResolver;
-    ArrayList<String> calendars;
+    HashMap<String, String> calendars;
 
     Calendar startDay;
     Calendar endDay;
@@ -85,36 +83,14 @@ public class CalendarDataModel {
 
     public CalendarDataModel(Context ctx) {
 
-        calendars = new ArrayList<String>();
+        calendars = new HashMap<String, String>();
         calEvents = new ArrayList<Event>();
         startDay = Calendar.getInstance();
         endDay = Calendar.getInstance();
         // Get Content getter
         contentResolver = ctx.getContentResolver();
         // Get AppDatabase
-        gdb = new GoalAppDatabase() {
-            @NonNull
-            @Override
-            protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration config) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            protected InvalidationTracker createInvalidationTracker() {
-                return null;
-            }
-
-            @Override
-            public void clearAllTables() {
-
-            }
-
-            @Override
-            public GoalDAO goalDAO() {
-                return null;
-            }
-        };
+        gdb = GoalAppDatabase.getAppDatabase(ctx);
 
         // Check for permissions
         if (ContextCompat.checkSelfPermission(
@@ -125,25 +101,20 @@ public class CalendarDataModel {
         }
     }
 
-    public ArrayList<String> getCalendars() {
+    public HashMap<String, String> getCalendars() {
         // Fetch a list of all calendars sync'd with the device and their display names
         Cursor cursor = contentResolver.query(CALENDAR_URI, CALENDAR_FIELDS, null, null, null);
 
         try {
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    String name = cursor.getString(CALENDAR_NAME);
-                    String displayName = cursor.getString(CALENDAR_DISPLAY_NAME);
-                    // This is actually a better pattern:
-                    String color = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_COLOR));
-                    Boolean selected = !cursor.getString(3).equals("0");
-                    Log.d(TAG, "getCalendars: " + name);
+                    String displayName = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
                     Log.d(TAG, "getCalendars: " + displayName);
-                    Log.d(TAG, "getCalendars: " + color);
-                    Log.d(TAG, "getCalendars: " + selected);
+                    String calendarID = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars._ID));
+                    Log.d(TAG, "getCalendars: " + calendarID);
                     // Check if calendar already exists
-                    if (!calendars.contains(displayName)) {
-                        calendars.add(displayName);
+                    if (!calendars.keySet().contains(displayName)) {
+                        calendars.put(displayName, calendarID);
                     }
                 }
             }
@@ -210,10 +181,31 @@ public class CalendarDataModel {
         return calEvents;
     }
 
+    // Goal Methods
     public void addGoal(Goal goal) {
-        // TODO: 4/18/2019 move to separate thread
-        gdb.goalDAO().insertAll(goal);
+        AsyncTask loader = new AsyncTask<Goal, String, String>(){
+
+            @Override
+            protected String doInBackground(Goal... goals) {
+                gdb.goalDAO().insertAll(goals);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                // TODO: 4/30/2019 Make Error reporting
+            }
+        };
+        loader.execute(goal);
+
     }
+
+    public List<Goal> getGoals () {
+        return gdb.goalDAO().getAll();
+    }
+
+    // Getters and Setters
 
     public Calendar getStartDay() {
         return startDay;
