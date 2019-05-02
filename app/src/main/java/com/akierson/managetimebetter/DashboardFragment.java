@@ -63,6 +63,8 @@ public class DashboardFragment extends Fragment {
         goalsByArea = view.findViewById(R.id.dashboard_goals_area_graph);
         goalsByDay = view.findViewById(R.id.dashboard_goals_day_graph);
 
+        // TODO: 5/2/2019 Write a graphing library
+
         return view;
     }
 
@@ -70,12 +72,6 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
     }
 
     @Override

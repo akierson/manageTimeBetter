@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Add Calendar Fragment to home screen
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag).commit();
+            toolbarTitle.setText(R.string.title_calendar);
         } else {
             showReadCalendarPermission();
             showWriteCalendarPermission();

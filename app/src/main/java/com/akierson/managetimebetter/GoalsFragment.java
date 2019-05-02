@@ -111,6 +111,7 @@ public class GoalsFragment extends Fragment {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            // TODO: Add Goal completion on left swipe
             int position = viewHolder.getAdapterPosition();
             mCal.gdb.goalDAO().delete(mAdapter.deleteItem(position));
         }

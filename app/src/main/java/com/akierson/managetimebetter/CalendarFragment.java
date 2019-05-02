@@ -240,8 +240,8 @@ public class CalendarFragment extends Fragment{
                     // Create event view
                     View eventLayout = (View) LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
                     // TODO: 4/25/2019 set color of event
+//                          events that overlap look weird
                     // Get Color from array
-                    // TODO: Add on click event for viewing events
                     eventLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
