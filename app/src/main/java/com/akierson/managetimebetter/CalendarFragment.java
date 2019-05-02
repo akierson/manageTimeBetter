@@ -1,19 +1,21 @@
 package com.akierson.managetimebetter;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.text.Format;
@@ -21,9 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
-// TODO: 4/28/2019 Add Swipe support, Requires set up in activity, and on Frament listener
-public class CalendarFragment extends Fragment implements View.OnClickListener {
+public class CalendarFragment extends Fragment{
 
     private static final String TAG = "CalendarFragment";
     private Calendar mStartDate;
@@ -34,9 +36,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     AsyncTaskRunner eventLoader;
 
     // Layout items
-    ImageButton nextDay;
-    ImageButton prevDay;
-
+    ScrollView scrollView;
     RelativeLayout dayOne;
     RelativeLayout dayTwo;
     RelativeLayout dayThree;
@@ -46,6 +46,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
     TextView dayThreeDisplay;
 
     ProgressBar progressBar;
+    GestureDetector gestDetector;
 
     // TODO: 4/28/2019 Add Reload on scroll down, Also Requires on Fragment interaction
     public CalendarFragment() {
@@ -97,9 +98,6 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         mCalModel.setStartDay(mStartDate);
         mCalModel.setEndDay(mEndDate);
 
-        nextDay = mView.findViewById(R.id.nextDay);
-        prevDay = mView.findViewById(R.id.prevDay);
-
         dayOne = mView.findViewById(R.id.left_event_column_day_one);
         dayTwo = mView.findViewById(R.id.left_event_column_day_two);
         dayThree = mView.findViewById(R.id.left_event_column_day_three);
@@ -110,8 +108,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
 
         progressBar = mView.findViewById(R.id.calendar_loadEvent_progressBar);
 
-        nextDay.setOnClickListener(this);
-        prevDay.setOnClickListener(this);
+        scrollView = mView.findViewById(R.id.calendar_scrollView);
+
+        gestDetector = new GestureDetector(this.getContext(), mGestureListener);
 
         AsyncTaskRunner eventLoader = new AsyncTaskRunner();
         eventLoader.execute(mCalModel.getCalendarEvents());
@@ -125,55 +124,62 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
         dayThree.removeAllViews();
     }
 
-
-    @Override
-    // Day Changer
-    public void onClick(View v) {
-        Calendar newDay;
-        switch (v.getId()) {
-            case R.id.nextDay:
-                Log.d(TAG, "onClick: Next Day Clicked");
-                //Set Start Day
-                newDay = mCalModel.getStartDay();
-                newDay.add(Calendar.DATE, 1);
-                mCalModel.setStartDay(newDay);
-
-                // Set End Day
-                newDay = mCalModel.getEndDay();
-                newDay.add(Calendar.DATE, 1);
-                mCalModel.setEndDay(newDay);
-                removeEvents();
-                eventLoader = new AsyncTaskRunner();
-                eventLoader.execute(mCalModel.getCalendarEvents());
-
-                break;
-            case R.id.prevDay:
-                Log.d(TAG, "onClick: Prev Day Clicked");
-                //Set Start Day
-                newDay = mCalModel.getStartDay();
-                newDay.add(Calendar.DATE, -1);
-                mCalModel.setStartDay(newDay);
-
-                // Set End Day
-                newDay = mCalModel.getEndDay();
-                newDay.add(Calendar.DATE, -1);
-                mCalModel.setEndDay(newDay);
-                removeEvents();
-                eventLoader = new AsyncTaskRunner();
-                eventLoader.execute(mCalModel.getCalendarEvents());
-
-                break;
+    private GestureDetector.OnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
+                                float distanceY) {
+            // TODO: 5/1/2019 Add Reload here
+            return true;
         }
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Calendar newDay;
+            float diff = Math.abs(e1.getX() - e2.getX());
+            // TODO: 5/1/2019 Make diff screen independent
+            // TODO: 5/1/2019 add animations 
+            if (diff > 150) {
+                if (e1.getX() > e2.getX()) {
+                    Log.d(TAG, "onClick: Next Day Clicked");
+                    //Set Start Day
+                    newDay = mCalModel.getStartDay();
+                    newDay.add(Calendar.DATE, 1);
+                    mCalModel.setStartDay(newDay);
 
+                    // Set End Day
+                    newDay = mCalModel.getEndDay();
+                    newDay.add(Calendar.DATE, 1);
+                    mCalModel.setEndDay(newDay);
+                    removeEvents();
+                    eventLoader = new AsyncTaskRunner();
+                    eventLoader.execute(mCalModel.getCalendarEvents());
+                } else {
+                    Log.d(TAG, "onClick: Prev Day Clicked");
+                    //Set Start Day
+                    newDay = mCalModel.getStartDay();
+                    newDay.add(Calendar.DATE, -1);
+                    mCalModel.setStartDay(newDay);
 
-        Log.d(TAG, "onClick: New dates: " + mCalModel.getStartDay().getTime().toString() + " - " + mCalModel.getEndDay().getTime().toString());
-    }
+                    // Set End Day
+                    newDay = mCalModel.getEndDay();
+                    newDay.add(Calendar.DATE, -1);
+                    mCalModel.setEndDay(newDay);
+                    removeEvents();
+                    eventLoader = new AsyncTaskRunner();
+                    eventLoader.execute(mCalModel.getCalendarEvents());
+                }
+            }
+
+            Log.d(TAG, "onClick: New dates: " + mCalModel.getStartDay().getTime().toString() + " - " + mCalModel.getEndDay().getTime().toString());
+            return true;
+        }
+    };
 
     private class AsyncTaskRunner extends AsyncTask<ArrayList<Event>, String, ArrayList<RelativeLayout>> {
 
         protected ArrayList<RelativeLayout> doInBackground(ArrayList<Event>... arrayList) {
 
             // TODO: 4/26/2019 Load calendars and color values
+            HashMap<String, String> userCals = mCalModel.getCalendars();
             // Calls onProgressUpdate()
             publishProgress("Loading...");
             // Get events from varargs
@@ -198,6 +204,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             Calendar dayThreeEnd = (Calendar) dayThreeStart.clone();
             dayThreeEnd.add(Calendar.DATE, 1);
 
+            // TODO: 5/1/2019 make static fields 
             DisplayMetrics displayMetric = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetric);
             float scrollViewHeight = (getResources().getDisplayMetrics().density * 1500);
@@ -216,23 +223,36 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
             newDate.setTime(newDate.getTime() + 86400000);
             dayThreeDisplay.setText(dateParse.format(newDate));
 
+            // Set Colors by number of calendars
+            //TODO: fix me
+//            HashMap<String, Integer> colors = new HashMap<>();
+//            int interval = (int) (16581375.0/userCals.size());
+//            for (int i = 0; i < userCals.size(); i++) {
+//                colors.put(userCals.get(i), interval * i);
+//                Log.d(TAG, "doInBackground: Calendar: " + userCals.get(i) + " Color: " + userCals.get(i));
+//            }
+
             for (int i = 0; i < events.size(); i++) {
-                Event newEvent = events.get(i);
+                final Event newEvent = events.get(i);
                 Log.d(TAG, "doInBackground: " + newEvent.getTitle() + ": " + newEvent.getBegin().getTime().toString() + " - " + newEvent.getEnd().getTime().toString());
 
                 if (!newEvent.isAllDay()) {
                     // Create event view
                     View eventLayout = (View) LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
+                    // TODO: 4/25/2019 set color of event
+                    // Get Color from array
                     // TODO: Add on click event for viewing events
                     eventLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage(newEvent.getDescription())
+                                    .setTitle(newEvent.getTitle());
+                            AlertDialog dialog = builder.create();
+                            Log.d(TAG, "onClick: Clicked");
+                            dialog.show();
                         }
                     });
-
-                    ;
-                    // TODO: 4/25/2019 set color of event
 
                     // Get items in view
                     TextView eventName = eventLayout.findViewById(R.id.event_name);
@@ -255,8 +275,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener {
                         long height = newEvent.getEnd().getTimeInMillis() - startTime.getTimeInMillis();
                         height = (long) ((height * scrollViewHeight)/86400000);
 
-                        float minuteDist =  (scrollViewHeight / 1440);
-                        float distFromTop = ((startTime.get(Calendar.HOUR_OF_DAY) * 60) + startTime.get(Calendar.MINUTE)) * minuteDist;
+                        // 1 hr = 60dp, 1min = 1dp
+                        float distFromTop = ((startTime.get(Calendar.HOUR_OF_DAY) * 60) + startTime.get(Calendar.MINUTE)) * getResources().getDisplayMetrics().density;
 
                         if (startTime.after(dayOneStart) && startTime.before(dayTwoStart) ) {
                             // Set Params

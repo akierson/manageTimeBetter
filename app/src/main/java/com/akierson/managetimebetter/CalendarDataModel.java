@@ -101,7 +101,28 @@ public class CalendarDataModel {
         }
     }
 
+    public CalendarDataModel(Context ctx, Calendar startDay, Calendar endDay) {
+
+        calendars = new HashMap<String, String>();
+        calEvents = new ArrayList<Event>();
+        this.startDay = startDay;
+        this.endDay = endDay;
+        // Get Content getter
+        contentResolver = ctx.getContentResolver();
+        // Get AppDatabase
+        gdb = GoalAppDatabase.getAppDatabase(ctx);
+
+        // Check for permissions
+        if (ContextCompat.checkSelfPermission(
+                ctx.getApplicationContext(), Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                ctx.getApplicationContext(), Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            // Permission granted
+            Log.d(TAG, "onCreate: Calendar Permissions Granted");
+        }
+    }
+
     public HashMap<String, String> getCalendars() {
+        // TODO: 5/1/2019 Create lazy loading 
         // Fetch a list of all calendars sync'd with the device and their display names
         Cursor cursor = contentResolver.query(CALENDAR_URI, CALENDAR_FIELDS, null, null, null);
 
@@ -109,9 +130,7 @@ public class CalendarDataModel {
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     String displayName = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
-                    Log.d(TAG, "getCalendars: " + displayName);
                     String calendarID = cursor.getString(cursor.getColumnIndex(CalendarContract.Calendars._ID));
-                    Log.d(TAG, "getCalendars: " + calendarID);
                     // Check if calendar already exists
                     if (!calendars.keySet().contains(displayName)) {
                         calendars.put(displayName, calendarID);
@@ -183,23 +202,25 @@ public class CalendarDataModel {
 
     // Goal Methods
     public void addGoal(Goal goal) {
-        AsyncTask loader = new AsyncTask<Goal, String, String>(){
-
-            @Override
-            protected String doInBackground(Goal... goals) {
-                gdb.goalDAO().insertAll(goals);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                // TODO: 4/30/2019 Make Error reporting
-            }
-        };
+        goalLoader loader = new goalLoader();
         loader.execute(goal);
 
     }
+
+    private class goalLoader extends AsyncTask<Goal, String, String> {
+
+        @Override
+        protected String doInBackground(Goal... goals) {
+            gdb.goalDAO().insertAll(goals);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            // TODO: 4/30/2019 Make Error reporting
+        }
+    };
 
     public List<Goal> getGoals () {
         return gdb.goalDAO().getAll();

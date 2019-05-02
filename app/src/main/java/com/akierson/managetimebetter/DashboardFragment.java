@@ -1,22 +1,36 @@
 package com.akierson.managetimebetter;
 
 import android.content.Context;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Calendar;
 
 /**
  * A fragment showing a CardView
  */
 public class DashboardFragment extends Fragment {
-    // start date
-//    end date
-//            mcalmodel
+
+    // Constants for intents, tags and permission numeration
+    private static final String START_DATE = "startDate";
+    private static final String END_DATE = "endDate";
+
+    // Params
+    Calendar startDate;
+    Calendar endDate;
+    CalendarDataModel mCal;
+
+    SurfaceView goalsByArea;
+    SurfaceView goalsByDay;
+
 
 
     /**
@@ -24,13 +38,11 @@ public class DashboardFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public DashboardFragment() {
+
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static DashboardFragment newInstance(int columnCount) {
+    public static DashboardFragment newInstance() {
         DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
@@ -38,12 +50,18 @@ public class DashboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        mCal = new CalendarDataModel(getContext());
+
+        goalsByArea = view.findViewById(R.id.dashboard_goals_area_graph);
+        goalsByDay = view.findViewById(R.id.dashboard_goals_day_graph);
 
         return view;
     }

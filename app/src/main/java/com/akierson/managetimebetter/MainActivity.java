@@ -20,10 +20,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Set;
@@ -32,7 +34,6 @@ import java.util.Set;
 // TODO: 4/28/2019 Add launch screen of icon
 // Loads Calendars from phone and stores usage events from recent times
 public class MainActivity extends AppCompatActivity {
-
 
     // Constants for intents, tags and permission numeration
     private static final String START_DATE = "startDate";
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     // Views
+    TextView toolbarTitle;
+
     FloatingActionButton fabEvent;
     FloatingActionButton fabGoals;
 
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         
         // Get Layout items
+        toolbarTitle = findViewById(R.id.toolbar_title);
+
         fabEvent = findViewById(R.id.fab_event);
         fabGoals = findViewById(R.id.fab_goal);
 
@@ -275,13 +280,17 @@ public class MainActivity extends AppCompatActivity {
                     // Remove Other Fragments first
                     // Then Load Current Fragment
                     Log.d(TAG, "Adding Calendar Fragment");
+                    toolbarTitle.setText(getString(R.string.title_calendar));
                     getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, calFrag, "CalFragAttached").commit();
                     return true;
                 case R.id.navigation_goals:
+                    toolbarTitle.setText(getString(R.string.title_goals));
                     Log.d(TAG, "Adding Goal Fragment");
                     getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, goalFrag, "GoalFragAttached").commit();
                     return true;
                 case R.id.navigation_dashboard:
+                    toolbarTitle.setText(getString(R.string.title_dashboard));
+
                     Log.d(TAG, "Adding Dashboard Fragment");
                     getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, dashFrag, "DashFragAttached").commit();
                     return true;
@@ -290,4 +299,13 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        boolean handled = super.dispatchTouchEvent(ev);
+        if (calFrag.isAdded()) {
+            handled = calFrag.gestDetector.onTouchEvent(ev);
+        }
+        return handled;
+    }
 }

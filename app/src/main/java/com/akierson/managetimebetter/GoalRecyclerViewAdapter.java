@@ -6,24 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.akierson.managetimebetter.GoalsFragment.OnListFragmentInteractionListener;
-import com.akierson.managetimebetter.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class GoalRecyclerViewAdapter extends RecyclerView.Adapter<GoalRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    List<Goal> mValues;
 
-    public GoalRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public GoalRecyclerViewAdapter(List<Goal> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -35,20 +28,41 @@ public class GoalRecyclerViewAdapter extends RecyclerView.Adapter<GoalRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // Set values
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mName.setText(mValues.get(position).getName());
+        switch (mValues.get(position).getLevel()) {
+            case 0:
+                holder.mLevel.setText("TODAY");
+                break;
+            case 1:
+                holder.mLevel.setText("THIS WEEK");
+                break;
+            case 2:
+                holder.mLevel.setText("THIS MONTH");
+                break;
+            case 3:
+                holder.mLevel.setText("THIS YEAR");
+                break;
+            case 4:
+                holder.mLevel.setText("NEXT 5 YEARS");
+                break;
+        }
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        if (mValues.get(position).isRecursion()) {
+            holder.mRecursion.setText(R.string.goal_isRecursive);
+        } else {
+            holder.mRecursion.setText(R.string.goal_notRecursive);
+        }
+    }
+
+    public Goal deleteItem(int position) {
+        Goal recentlyDeceased = mValues.get(position);
+        mValues.remove(position);
+        notifyItemRemoved(position);
+        // TODO: Add Snackbar for undoing
+        return recentlyDeceased;
+
     }
 
     @Override
@@ -58,21 +72,22 @@ public class GoalRecyclerViewAdapter extends RecyclerView.Adapter<GoalRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mName;
+        public final TextView mRecursion;
+        public final TextView mLevel;
+        public Goal mItem;
 
         public ViewHolder(View view) {
-            // TODO: 5/1/2019 fix me daddy 
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mName = view.findViewById(R.id.goalDescription);
+            mRecursion = view.findViewById(R.id.goalRecursion);
+            mLevel = view.findViewById(R.id.goalLevel);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mName.getText() + "'";
         }
     }
 }

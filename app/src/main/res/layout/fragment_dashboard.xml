@@ -3,75 +3,97 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
-        <TextView
-            android:text="Dashboard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
             <!--TODO: Goals completed by day-->
             <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/dashboard_goals_day_title"
+                        android:layout_margin="@dimen/text_margin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Goals Completed by Day"/>
+                        android:text="Goals Completed by Day" />
+
                     <SurfaceView
                         android:id="@+id/dashboard_goals_day_graph"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="300dp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <!--TODO: Time by Goal area-->
             <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/dashboard_goals_area_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <SurfaceView
-                    android:id="@+id/dashboard_goals_area_graph"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dashboard_goals_area_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/text_margin"
+                        android:text="Goals by Area" />
+
+                    <SurfaceView
+                        android:id="@+id/dashboard_goals_area_graph"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+                </LinearLayout>
+
             </android.support.v7.widget.CardView>
             <!--TODO: Goals Total
             Goals Delayed
             Average Delay
             -->
             <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <TableLayout
-                        android:id="@+id/dashboard_goals_total"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <!--TODO: Add when added areas are added-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/dashboard_goal_"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="TextView" />-->
+
+                    <!--<TableLayout-->
+                        <!--android:id="@+id/dashboard_goals_total"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
                         <!--TODO: Make programatically-->
-                        <TableRow></TableRow>
-                    </TableLayout>
+                        <!--<TableRow></TableRow>-->
+                    <!--</TableLayout>-->
+
                     <TextView
                         android:id="@+id/dashboard_goals_delayed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/dashboard_goals_delayed_average"
                         android:layout_width="match_parent"

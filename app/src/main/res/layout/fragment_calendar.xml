@@ -6,54 +6,11 @@
     tools:context=".CalendarFragment">
     <!-- TODO: Make Styles Consistent -->
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
-        android:elevation="8dp"
-        android:minHeight="8dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:id="@+id/prevDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:contentDescription=""
-                android:src="@drawable/baseline_arrow_left_black_24dp" />
-
-            <TextView
-                android:id="@+id/calendarDayTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:gravity="center"
-                android:text="@string/title_calendar"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <ImageButton
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:id="@+id/nextDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_right_black_24dp"
-                android:contentDescription="" />
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
-
     <ScrollView
+        android:id="@+id/calendar_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="112dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginTop="48dp"
         android:scrollbars="none">
         <!--TODO: Add dates animations -->
         <LinearLayout
@@ -941,7 +898,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="0dp"
         android:background="@color/primaryTextColor"
         android:orientation="horizontal">
 

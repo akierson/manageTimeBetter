@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -34,6 +35,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class AddEvent extends Activity {
 
@@ -170,10 +172,23 @@ public class AddEvent extends Activity {
                 endTime.setText(time);
             }
         };
+
+        allDay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if ( isChecked ) {
+                    // TODO: 5/1/2019 Move to fields
+                    findViewById(R.id.addEvent_startHolder).setVisibility(GONE);
+                    findViewById(R.id.addEvent_endHolder).setVisibility(GONE);
+                } else {
+                    findViewById(R.id.addEvent_startHolder).setVisibility(VISIBLE);
+                    findViewById(R.id.addEvent_endHolder).setVisibility(VISIBLE);
+                }
+            }
+        });
     }
 
     // TODO: 4/11/2019 Add location validation
-    // TODO: 4/30/2019 Hide dates on all day set
 
     public void addEvent(View view) {
         ContentResolver cr = getContentResolver();

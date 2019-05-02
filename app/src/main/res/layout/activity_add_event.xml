@@ -88,6 +88,7 @@
                 tools:layout_editor_absoluteY="186dp" />
 
             <LinearLayout
+                android:id="@+id/addEvent_startHolder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
@@ -133,6 +134,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/addEvent_endHolder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"

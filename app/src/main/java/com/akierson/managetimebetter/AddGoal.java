@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ public class AddGoal extends AppCompatActivity {
     EditText gDescr;
     Spinner gSpinner;
     Spinner gLevel;
+    Button gLevelAdder;
     Switch gRecurring;
     Switch gReminder;
     TextView gReminderDay;
@@ -54,6 +56,7 @@ public class AddGoal extends AppCompatActivity {
         gDescr = findViewById(R.id.addGoal_goalDescription);
         gSpinner = findViewById(R.id.addGoal_goalArea);
         gLevel = findViewById(R.id.addGoal_goalLevel);
+        gLevelAdder = findViewById(R.id.addGoal_addArea);
         gRecurring = findViewById(R.id.addGoal_goalRecur);
         gReminder = findViewById(R.id.addGoal_addReminder);
         gReminderDay = findViewById(R.id.addGoal_reminderDay);
@@ -89,6 +92,14 @@ public class AddGoal extends AppCompatActivity {
             }
         });
 
+        gLevelAdder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            // TODO: 5/1/2019 Add Table to database 
+            public void onClick(View v) {
+                
+            }
+        });
+
     }
 
     public boolean addGoal(View view) {
@@ -110,11 +121,11 @@ public class AddGoal extends AppCompatActivity {
         }
 
         // will always have a value
-        String goalLevel = gLevel.getSelectedItem().toString();
+        int goalLevel = gLevel.getSelectedItemPosition();
         // will always have a value
         String goalArea = gSpinner.getSelectedItem().toString();
         // will always have a value
-        boolean recurring = gRecurring.isEnabled();
+        boolean recurring = gRecurring.isChecked();
         Goal mGoal = new Goal(name, description, goalArea, goalLevel, recurring);
 
         // Add Goal to Room Table

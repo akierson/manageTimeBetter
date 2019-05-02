@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/calendar_event_bg"
     android:layout_alignParentTop="true"
+    android:layout_marginLeft="32dp"
     android:elevation="8dp">
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:text="Location"
         android:textColor="@color/primaryTextColor"
-        android:text="Location" />
+        android:textSize="10sp" />
 </android.support.v7.widget.LinearLayoutCompat>

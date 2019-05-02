@@ -1,33 +1,32 @@
 package com.akierson.managetimebetter;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.akierson.managetimebetter.dummy.DummyContent;
-import com.akierson.managetimebetter.dummy.DummyContent.DummyItem;
-
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * A fragment representing a list of Goals.
  */
+// TODO: 5/1/2019 Add Sorting
+//    5/1/2019 Add Reload when coming from add goal/event
+//    have detailed view
 public class GoalsFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private CalendarDataModel mCal;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -38,72 +37,115 @@ public class GoalsFragment extends Fragment {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static GoalsFragment newInstance(int columnCount) {
+    public static GoalsFragment newInstance() {
         GoalsFragment fragment = new GoalsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // TODO: 5/1/2019 color by area
         View view = inflater.inflate(R.layout.fragment_goals_list, container, false);
+
+        mCal = new CalendarDataModel(getContext());
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new GoalRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
+            Comparator<Goal> goalCompare = new Comparator<Goal>() {
+                @Override
+                public int compare(Goal o1, Goal o2) {
+
+                    return o1.getLevel() - o2.getLevel();
+                }
+            };
+            List<Goal> goals = mCal.getGoals();
+            goals.sort(goalCompare);
+            GoalRecyclerViewAdapter mAdapter = new GoalRecyclerViewAdapter(goals);
+            recyclerView.setAdapter(mAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(mAdapter));
+            itemTouchHelper.attachToRecyclerView(recyclerView);
         }
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+    // Custome Classes for deleting etc. from https://medium.com/@zackcosborn/step-by-step-recyclerview-swipe-to-delete-and-undo-7bbae1fce27e
+    public  class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+
+        private GoalRecyclerViewAdapter mAdapter;
+
+        private Drawable icon;
+        private final ColorDrawable background;
+
+
+        public SwipeToDeleteCallback(GoalRecyclerViewAdapter adapter) {
+            super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            mAdapter = adapter;
+            icon = getContext().getDrawable(R.drawable.baseline_delete_white_24dp);
+            background = new ColorDrawable(Color.RED);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            // used for up and down movements
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            mCal.gdb.goalDAO().delete(mAdapter.deleteItem(position));
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+            View itemView = viewHolder.itemView;
+            int backgroundCornerOffset = 20; //so background is behind the rounded corners of itemView
+
+            int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+            int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
+            int iconBottom = iconTop + icon.getIntrinsicHeight();
+
+            if (dX > 0) { // Swiping to the right
+                int iconLeft = itemView.getLeft() + iconMargin + icon.getIntrinsicWidth();
+                int iconRight = itemView.getLeft() + iconMargin;
+                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                background.setBounds(itemView.getLeft(), itemView.getTop(),
+                        itemView.getLeft() + ((int) dX) + backgroundCornerOffset, itemView.getBottom());
+            } else if (dX < 0) { // Swiping to the left
+                int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
+                int iconRight = itemView.getRight() - iconMargin;
+                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+
+                background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
+                        itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            } else { // view is unSwiped
+                background.setBounds(0, 0, 0, 0);
+            }
+
+            background.draw(c);
+            icon.draw(c);
+        }
     }
 }

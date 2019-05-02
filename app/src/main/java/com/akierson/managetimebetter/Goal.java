@@ -13,7 +13,7 @@ public class Goal {
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "level")
-    private String level;
+    private int level;
     @ColumnInfo(name = "description")
     private String description;
     @ColumnInfo(name = "area")
@@ -39,7 +39,7 @@ public class Goal {
 
     // TODO: 4/28/2019 Add Event Recursion
     // Constructor without Event
-    public Goal(String name, String description, String area, String level, boolean recursion) {
+    public Goal(String name, String description, String area, int level, boolean recursion) {
         this.name = name;
         this.description = description;
         this.area = area;
@@ -48,7 +48,7 @@ public class Goal {
     }
 
     // Constructor with Event
-    public Goal(String name, String description, String area, String level, boolean recursion, int eventid) {
+    public Goal(String name, String description, String area, int level, boolean recursion, int eventid) {
         this.name = name;
         this.description = description;
         this.area = area;
@@ -65,11 +65,11 @@ public class Goal {
         this._id = id;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 
