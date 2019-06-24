@@ -115,13 +115,10 @@ public class CalendarFragment extends Fragment{
         AsyncTaskRunner eventLoader = new AsyncTaskRunner();
         eventLoader.execute(mCalModel.getCalendarEvents());
 
-        return mView;
-    }
+        DisplayMetrics displayMetric = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetric);
 
-    private void removeEvents() {
-        dayOne.removeAllViews();
-        dayTwo.removeAllViews();
-        dayThree.removeAllViews();
+        return mView;
     }
 
     private GestureDetector.OnGestureListener mGestureListener = new GestureDetector.SimpleOnGestureListener() {
@@ -135,11 +132,10 @@ public class CalendarFragment extends Fragment{
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Calendar newDay;
             float diff = Math.abs(e1.getX() - e2.getX());
-            // TODO: 5/1/2019 Make diff screen independent
             // TODO: 5/1/2019 add animations 
-            if (diff > 150) {
+            if (diff > (50 * getResources().getDisplayMetrics().density)) {
                 if (e1.getX() > e2.getX()) {
-                    Log.d(TAG, "onClick: Next Day Clicked");
+                    Log.d(TAG, "onClick: Next Day Flung");
                     //Set Start Day
                     newDay = mCalModel.getStartDay();
                     newDay.add(Calendar.DATE, 1);
@@ -149,11 +145,11 @@ public class CalendarFragment extends Fragment{
                     newDay = mCalModel.getEndDay();
                     newDay.add(Calendar.DATE, 1);
                     mCalModel.setEndDay(newDay);
-                    removeEvents();
+
                     eventLoader = new AsyncTaskRunner();
                     eventLoader.execute(mCalModel.getCalendarEvents());
                 } else {
-                    Log.d(TAG, "onClick: Prev Day Clicked");
+                    Log.d(TAG, "onClick: Prev Day Flung");
                     //Set Start Day
                     newDay = mCalModel.getStartDay();
                     newDay.add(Calendar.DATE, -1);
@@ -163,7 +159,7 @@ public class CalendarFragment extends Fragment{
                     newDay = mCalModel.getEndDay();
                     newDay.add(Calendar.DATE, -1);
                     mCalModel.setEndDay(newDay);
-                    removeEvents();
+
                     eventLoader = new AsyncTaskRunner();
                     eventLoader.execute(mCalModel.getCalendarEvents());
                 }
@@ -186,7 +182,6 @@ public class CalendarFragment extends Fragment{
             ArrayList<Event> events;
             try {
                 events = arrayList[0];
-
             } catch (Exception e) {
                 Log.e(TAG, "doInBackground: Events empty: ", e);
                 return null;
@@ -204,9 +199,6 @@ public class CalendarFragment extends Fragment{
             Calendar dayThreeEnd = (Calendar) dayThreeStart.clone();
             dayThreeEnd.add(Calendar.DATE, 1);
 
-            // TODO: 5/1/2019 make static fields 
-            DisplayMetrics displayMetric = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetric);
             float scrollViewHeight = (getResources().getDisplayMetrics().density * 1500);
 
             // Add Containers for events
@@ -238,7 +230,7 @@ public class CalendarFragment extends Fragment{
 
                 if (!newEvent.isAllDay()) {
                     // Create event view
-                    View eventLayout = (View) LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
+                    View eventLayout = LinearLayout.inflate(getActivity(), R.layout.fragment_calendar_event, null);
                     // TODO: 4/25/2019 set color of event
 //                          events that overlap look weird
                     // Get Color from array
@@ -271,7 +263,6 @@ public class CalendarFragment extends Fragment{
                         eventName.setText(newEvent.getTitle());
                         eventLocation.setText(newEvent.getLocation());
 
-                        // TODO: 4/24/2019 Create optimizer for events
                         long height = newEvent.getEnd().getTimeInMillis() - startTime.getTimeInMillis();
                         height = (long) ((height * scrollViewHeight)/86400000);
 
@@ -286,7 +277,7 @@ public class CalendarFragment extends Fragment{
                             // Add Event to column 1
                             dayOneContainer.addView(eventLayout);
 
-                        } else if (startTime.before(dayThreeStart)){
+                        } else if ( startTime.after(dayTwoStart) && startTime.before(dayThreeStart) ){
                             // Set Params
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
                             params.setMargins(0, (int) distFromTop, 0, 0);
@@ -294,7 +285,7 @@ public class CalendarFragment extends Fragment{
                             // Add Event to column 2
                             dayTwoContainer.addView(eventLayout);
 
-                        } else if (startTime.before(dayThreeEnd)){
+                        } else if ( startTime.after(dayThreeStart) && startTime.before(dayThreeEnd)){
                             // Set Params
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
                             params.setMargins(0, (int) distFromTop, 0, 0);
@@ -322,6 +313,9 @@ public class CalendarFragment extends Fragment{
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
+            dayOne.removeAllViews();
+            dayTwo.removeAllViews();
+            dayThree.removeAllViews();
         }
 
 

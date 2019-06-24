@@ -25,6 +25,7 @@
                 android:layout_weight="1"
                 android:onClick="cancelAddEvent"
                 android:text="@android:string/cancel"
+                android:textColor="@color/primaryTextColor"
                 android:textAlignment="center"
                 android:clickable="true"
                 android:focusable="true"/>
@@ -37,6 +38,7 @@
                 android:layout_weight="1"
                 android:onClick="addEvent"
                 android:text="@string/addEvent_add"
+                android:textColor="@color/primaryTextColor"
                 android:textAlignment="center"
                 android:clickable="true"
                 android:focusable="true"/>
@@ -70,6 +72,7 @@
                 android:layout_margin="16dp"
                 android:autofillHints=""
                 android:ems="10"
+                android:singleLine="true"
                 android:hint="@string/addEvent_eventTitle"
                 android:inputType="textCapSentences"
                 app:layout_constraintBottom_toTopOf="@+id/addEvent_allDay"

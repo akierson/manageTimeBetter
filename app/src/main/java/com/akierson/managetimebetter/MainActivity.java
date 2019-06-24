@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,6 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Set;
 
-// TODO: 4/28/2019 Move on close events to async/close is choppy 
 // TODO: 4/28/2019 Add launch screen of icon
 // Loads Calendars from phone and stores usage events from recent times
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     // Constants for intents, tags and permission numeration
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
+
     // Permission status
     private final int REQUEST_PERMISSION_READ_CALENDAR=1;
     private final int REQUEST_PERMISSION_WRITE_CALENDAR=2;
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         
         // Get Layout items
         toolbarTitle = findViewById(R.id.toolbar_title);
-
         fabEvent = findViewById(R.id.fab_event);
         fabGoals = findViewById(R.id.fab_goal);
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         showFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.show_fab_goals);
         hideFabEvent = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_event);
         hideFabGoals = AnimationUtils.loadAnimation(getApplication(), R.anim.hide_fab_goals);
-        // TODO: 4/28/2019 Make animation start at first position by moveing fabs after animation 
+
         // Create localized date variables
         startDateCal = Calendar.getInstance();
         endDateCal = Calendar.getInstance();
@@ -212,21 +212,21 @@ public class MainActivity extends AppCompatActivity {
 
     // On Fab Press
     @SuppressLint("RestrictedApi")
+    // TODO: 5/2/2019 fix animations 
     public void onFabPress(View fab){
         // open new window with event adding
-        // TODO: 3/20/2019 Pass current date to addEvent for better workage
         // Add Two fabs
         // Move FAB Event
         FrameLayout.LayoutParams layoutParamsEvent = (FrameLayout.LayoutParams) fabEvent.getLayoutParams();
         FrameLayout.LayoutParams layoutParamsGoals = (FrameLayout.LayoutParams) fabGoals.getLayoutParams();
 
         if (!fabMenuOpen) {
-            layoutParamsEvent.bottomMargin += (int) (fabEvent.getHeight() * 1.7);
-            layoutParamsGoals.bottomMargin += (int) (fabGoals.getHeight() * 3.0);
             fabEvent.setLayoutParams(layoutParamsEvent);
             fabGoals.setLayoutParams(layoutParamsGoals);
             fabEvent.startAnimation(showFabEvent);
             fabGoals.startAnimation(showFabGoals);
+            layoutParamsEvent.bottomMargin += (int) (fabEvent.getHeight() * 1.7);
+            layoutParamsGoals.bottomMargin += (int) (fabGoals.getHeight() * 3.0);
             fabEvent.setVisibility(View.VISIBLE);
             fabGoals.setVisibility(View.VISIBLE);
             fabEvent.setClickable(true);
@@ -234,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
 
             fabMenuOpen = true;
         } else {
-            layoutParamsEvent.bottomMargin -= (int) (fabEvent.getHeight() * 1.7);
-            layoutParamsGoals.bottomMargin -= (int) (fabGoals.getHeight() * 3.0);
             fabEvent.setLayoutParams(layoutParamsEvent);
             fabGoals.setLayoutParams(layoutParamsGoals);
             fabEvent.startAnimation(hideFabEvent);
             fabGoals.startAnimation(hideFabGoals);
+            layoutParamsEvent.bottomMargin -= (int) (fabEvent.getHeight() * 1.7);
+            layoutParamsGoals.bottomMargin -= (int) (fabGoals.getHeight() * 3.0);
             fabEvent.setVisibility(View.INVISIBLE);
             fabGoals.setVisibility(View.INVISIBLE);
             fabEvent.setClickable(false);
@@ -267,6 +267,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TODO: 5/16/2019 Need to add a Null reference check on Fragment Manager
+    // TODO: 5/16/2019 Fix one off day 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (getSupportFragmentManager().getFragments() != null) {
+            if (calFrag.isAdded()) {
+                // TODO: Reload Events
+            } else if (goalFrag.isAdded()) {
+                // TODO: Reload Goals
+            } else if (dashFrag.isAdded()) {
+                //TODO: Reload Dashboard
+            }
+        }
+    }
+
+    // TODO: 5/22/2019 Get Dates from Fragments
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -306,6 +324,10 @@ public class MainActivity extends AppCompatActivity {
         boolean handled = super.dispatchTouchEvent(ev);
         if (calFrag.isAdded()) {
             handled = calFrag.gestDetector.onTouchEvent(ev);
+        } if (goalFrag.isAdded()) {
+            return true;
+        } if (goalFrag.isAdded()) {
+            return true;
         }
         return handled;
     }

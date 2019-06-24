@@ -122,7 +122,6 @@ public class CalendarDataModel {
     }
 
     public HashMap<String, String> getCalendars() {
-        // TODO: 5/1/2019 Create lazy loading 
         // Fetch a list of all calendars sync'd with the device and their display names
         Cursor cursor = contentResolver.query(CALENDAR_URI, CALENDAR_FIELDS, null, null, null);
 
@@ -211,14 +210,17 @@ public class CalendarDataModel {
 
         @Override
         protected String doInBackground(Goal... goals) {
-            gdb.goalDAO().insertAll(goals);
+            try {
+                gdb.goalDAO().insertAll(goals);
+            } catch (Exception e) {
+                Log.e(TAG, "doInBackground: Error inserting goal: ", e);
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            // TODO: 4/30/2019 Make Error reporting
         }
     };
 

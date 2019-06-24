@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ import java.util.List;
 /**
  * A fragment representing a list of Goals.
  */
-// TODO: 5/1/2019 Add Sorting
-//    5/1/2019 Add Reload when coming from add goal/event
+// TODO: 5/1/2019 Add Reload when coming from add goal/event
 //    have detailed view
 public class GoalsFragment extends Fragment {
+
+    private static final String TAG = "GoalsFragment";
 
     private CalendarDataModel mCal;
 
@@ -33,10 +35,9 @@ public class GoalsFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public GoalsFragment() {
+
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static GoalsFragment newInstance() {
         GoalsFragment fragment = new GoalsFragment();
         return fragment;
@@ -63,7 +64,6 @@ public class GoalsFragment extends Fragment {
             Comparator<Goal> goalCompare = new Comparator<Goal>() {
                 @Override
                 public int compare(Goal o1, Goal o2) {
-
                     return o1.getLevel() - o2.getLevel();
                 }
             };
@@ -74,6 +74,8 @@ public class GoalsFragment extends Fragment {
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(mAdapter));
             itemTouchHelper.attachToRecyclerView(recyclerView);
         }
+
+
         return view;
     }
 
@@ -112,11 +114,22 @@ public class GoalsFragment extends Fragment {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             // TODO: Add Goal completion on left swipe
+            Log.d(TAG, "onSwiped: Direction: " + direction);
             int position = viewHolder.getAdapterPosition();
-            mCal.gdb.goalDAO().delete(mAdapter.deleteItem(position));
+            // swipe right is 8
+            if (direction == 8) {
+                // Complete Goal
+                mCal.gdb.goalDAO().delete(mAdapter.deleteItem(position));
+            }
+            // swipe left is 4
+            if (direction == 4) {
+                // TODO: 5/2/2019 display other icon
+                mAdapter.mValues.get(position).setEvent_completed(true);
+            }
         }
 
         @Override
+        // TODO: 5/2/2019 match to parent view 
         public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 

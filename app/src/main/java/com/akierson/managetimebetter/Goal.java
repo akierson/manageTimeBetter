@@ -37,7 +37,6 @@ public class Goal {
     @ColumnInfo(name = "date_completed")
     private long date_completed;
 
-    // TODO: 4/28/2019 Add Event Recursion
     // Constructor without Event
     public Goal(String name, String description, String area, int level, boolean recursion) {
         this.name = name;
@@ -122,8 +121,8 @@ public class Goal {
         if (this.isEvent_completed()) {
             this.setDate_completed(Calendar.getInstance().getTimeInMillis());
         } else {
-            // TODO: 4/28/2019 Add Checks for 0 in date completed 
             this.setDate_completed(0);
+            this.event_completed = false;
         }
     }
 

@@ -18,7 +18,6 @@ public interface GoalDAO {
 
     // Set complete
     // Set Due Date
-    // Set
 
     @Query("SELECT * FROM goal WHERE _id IS :id")
     Goal findById(int id);

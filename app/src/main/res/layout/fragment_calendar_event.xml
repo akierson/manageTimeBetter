@@ -8,6 +8,8 @@
     android:layout_alignParentTop="true"
     android:layout_marginLeft="32dp"
     android:elevation="8dp">
+    <!--TODO: fix padding-->
+    <!--TODO: right margin-->
 
     <TextView
         android:id="@+id/event_name"

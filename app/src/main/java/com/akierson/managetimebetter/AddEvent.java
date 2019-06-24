@@ -37,6 +37,8 @@ import java.util.TimeZone;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+// TODO: Recycler view notify
+// TODO: 5/20/2019 Check if there is a calendar on Phone
 public class AddEvent extends Activity {
 
     private static final String TAG = "Add Event";
@@ -177,7 +179,6 @@ public class AddEvent extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if ( isChecked ) {
-                    // TODO: 5/1/2019 Move to fields
                     findViewById(R.id.addEvent_startHolder).setVisibility(GONE);
                     findViewById(R.id.addEvent_endHolder).setVisibility(GONE);
                 } else {

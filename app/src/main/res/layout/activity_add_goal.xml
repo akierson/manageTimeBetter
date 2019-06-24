@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--TODO: Add Reminder layout piece-->
-    <!--TODO: Fix Toolbar-->
+    <!--TODO: make similar to add event-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
@@ -24,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/primaryTextColor"
                 android:onClick="cancel"
                 android:text="@string/addGoalCancel"
                 android:textAlignment="center" />
@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/primaryTextColor"
                 android:onClick="addGoal"
                 android:text="@string/addGoal_button"
                 android:textAlignment="center" />
@@ -52,7 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
-        <!--TODO: Add Name and Description-->
         <EditText
             android:id="@+id/addGoal_goalName"
             android:layout_width="match_parent"
@@ -60,6 +60,7 @@
             android:layout_weight="2"
             android:hint="@string/addGoal_goalName"
             android:inputType=""
+            android:singleLine="true"
             android:importantForAutofill="no" />
 
         <EditText

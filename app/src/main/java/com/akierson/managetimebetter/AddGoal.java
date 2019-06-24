@@ -142,7 +142,11 @@ public class AddGoal extends AppCompatActivity {
             values.put(CalendarContract.Events.TITLE, name);
             values.put(CalendarContract.Events.DESCRIPTION, String.valueOf(R.string.addGoal_addGoalDescr));
             values.put(CalendarContract.Events.ALL_DAY, Boolean.TRUE);
+            // TODO: 5/20/2019 Have calendar ID passed to each Activities 
             // TODO: Have each area assigned to a calendar etc.
+            // TODO: add event recursion
+            // TODO: Make Async
+            // TODO: 5/2/2019 Check for end before beginning 
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             String eventID = uri.getLastPathSegment();
             Log.d(TAG, "addEvent: Event " + eventID + " added");
@@ -156,6 +160,7 @@ public class AddGoal extends AppCompatActivity {
 
     public void addReminder(boolean isChecked) {
         if (isChecked) {
+            // TODO: 5/20/2019 Change color of text is indicate disabled 
             int year = reminderDate.get(Calendar.YEAR);
             int month = reminderDate.get(Calendar.MONTH);
             int day = reminderDate.get(Calendar.DAY_OF_MONTH);
